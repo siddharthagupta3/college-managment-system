@@ -12,6 +12,7 @@
 - Frontend: HTML, CSS, JavaScript
 - Backend: (To be decided)
 - Database: MySQL
+- tables for students , attendence , fees ,
 
 ## Team Members
 - Siddhartha Gupta
