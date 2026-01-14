@@ -1,0 +1,56 @@
+ *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+body{background:#f4f4f4}
+
+.topbar{
+  display:flex;justify-content:space-between;
+  padding:10px 40px;background:#111;color:#fff
+}
+.apply-btn{background:orange;border:none;padding:6px 12px;color:#fff}
+
+.navbar{
+  display:flex;justify-content:space-between;
+  align-items:center;padding:15px 40px;background:#0b132b;color:#fff
+}
+.navbar ul{display:flex;gap:20px;list-style:none}
+.navbar span{color:orange}
+
+.hero{
+  height:70vh;
+  background:url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") center/cover;
+  display:flex;align-items:center;padding:40px;color:#fff
+}
+.hero-text{background:rgba(0,0,0,.5);padding:20px}
+.primary{background:orange;border:none;padding:10px;color:#fff}
+
+.features{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  text-align:center
+}
+.card{padding:30px;color:#fff}
+.orange{background:orange}
+.dark{background:#0b132b}
+
+.form-section{
+  background:#fff;padding:40px;text-align:center
+}
+.form-section input{
+  width:300px;padding:10px;margin:8px
+}
+.form-section button{
+  padding:10px 20px;background:orange;color:#fff;border:none
+}
+
+.courses{padding:40px}
+.course-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px
+}
+.course img{width:100%;height:200px;object-fit:cover}
+
+footer{
+  text-align:center;padding:15px;background:#111;color:#fff
+}
+
+@media(max-width:768px){
+  .features,.course-grid{grid-template-columns:1fr}
+}
