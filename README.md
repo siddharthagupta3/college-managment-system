@@ -15,6 +15,6 @@
 - tables for students , attendence , fees ,
 
 ## Team Members
-- Siddhartha Gupta
-- Member 2
+- Siddhartha Gupta [ team lead ]
+- yishu raj [ jr tranee ]
 - Member 3
