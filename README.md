@@ -16,5 +16,5 @@
 
 ## Team Members
 - Siddhartha Gupta [ team lead ]
-- yishu raj [ jr tranee ]
+- yishu raj [ jr trainee ]
 - Member 3
