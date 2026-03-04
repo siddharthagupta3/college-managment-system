@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api";
+var API_BASE = window.API_BASE || "http://localhost:5000/api";
 
 function getToken() {
   return localStorage.getItem("token");
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = "";
 
     try {
-      const res = await fetch(`${API_BASE}/ai/chat`, {
+      var res = await fetch(API_BASE + "/ai/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...authHeaders() },
         body: JSON.stringify({ message: text }),

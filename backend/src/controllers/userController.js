@@ -6,9 +6,20 @@ exports.getMe = async (req, res) => {
 
 exports.updateMe = async (req, res) => {
   try {
-    const { name, profile } = req.body || {};
+    const { name, username, profile } = req.body || {};
 
     if (typeof name === "string" && name.trim()) req.user.name = name.trim();
+
+    if (typeof username === "string" && username.trim()) {
+      const lower = username.trim().toLowerCase();
+      if (lower.length < 3) {
+        return res.status(400).json({ message: "Username must be at least 3 characters" });
+      }
+      const taken = await User.findOne({ username: lower, _id: { $ne: req.user._id } });
+      if (taken) return res.status(409).json({ message: "Username already taken" });
+      req.user.username = lower;
+    }
+
     if (profile && typeof profile === "object") {
       req.user.profile = {
         ...req.user.profile,

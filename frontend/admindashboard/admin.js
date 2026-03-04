@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api";
+var API_BASE = window.API_BASE || "http://localhost:5000/api";
 
 function getToken() {
   return localStorage.getItem("token");
@@ -171,7 +171,8 @@ async function reactToMessage(messageId, emoji) {
 function setupSocket(user) {
   const token = getToken();
   if (!token || typeof io === "undefined") return;
-  socket = io("http://localhost:5000", { auth: { token } });
+  var socketUrl = (API_BASE || "").replace(/\/api\/?$/, "") || "http://localhost:5000";
+  socket = io(socketUrl, { auth: { token } });
 
   socket.on("connect", () => {
     console.log("Socket connected");

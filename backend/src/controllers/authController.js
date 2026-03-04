@@ -30,10 +30,10 @@ async function sendEmail(to, subject, html) {
 
 exports.signup = async (req, res) => {
   try {
-    const { name, username, email, phone, password, role } = req.body || {};
+    const { name, email, phone, password, role } = req.body || {};
 
-    if (!name || !username || !email || !phone || !password) {
-      return res.status(400).json({ message: "name, username, email, phone, password are required" });
+    if (!name || !email || !phone || !password) {
+      return res.status(400).json({ message: "name, email, phone, password are required" });
     }
 
     if (role && !["admin", "faculty", "student"].includes(role)) {
@@ -45,21 +45,19 @@ exports.signup = async (req, res) => {
     }
 
     const lowerEmail = String(email).toLowerCase();
-    const lowerUsername = String(username).toLowerCase();
 
     const existingEmail = await User.findOne({ email: lowerEmail });
     if (existingEmail) return res.status(409).json({ message: "Email already registered" });
-
-    const existingUsername = await User.findOne({ username: lowerUsername });
-    if (existingUsername) return res.status(409).json({ message: "Username already taken" });
 
     const passwordHash = await bcrypt.hash(String(password), 12);
     const verificationToken = crypto.randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
+    const defaultUsername = `user_${crypto.randomBytes(4).toString("hex")}`;
+
     const user = await User.create({
       name,
-      username: lowerUsername,
+      username: defaultUsername,
       email: lowerEmail,
       phone,
       passwordHash,

@@ -21,6 +21,10 @@
         </div>
         <form id="profileForm" class="profile-form">
           <label>
+            Username <span class="muted">(set after signup, unique)</span>
+            <input id="profileUsernameInput" type="text" placeholder="e.g. john_doe" minlength="3" />
+          </label>
+          <label>
             Full Name
             <input id="profileNameInput" type="text" />
           </label>
@@ -47,6 +51,7 @@
       </div>
     </div>
   </div>
+  <script src="../config.js"></script>
   <script src="profile.js"></script>
 </body>
 </html>

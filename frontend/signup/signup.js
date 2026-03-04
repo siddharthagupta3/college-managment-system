@@ -10,7 +10,7 @@ loginBtn.addEventListener("click", () => {
   container.classList.remove("active");
 });
 
-const API_BASE = "http://localhost:5000/api";
+var API_BASE = window.API_BASE || "http://localhost:5000/api";
 
 function saveAuth(data) {
   if (!data || !data.token || !data.user) return;
@@ -44,7 +44,7 @@ async function handleLogin(e) {
   if (!email || !password) return;
 
   try {
-    const res = await fetch(`${API_BASE}/auth/login`, {
+    var res = await fetch(API_BASE + "/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -64,19 +64,22 @@ async function handleLogin(e) {
 
 async function handleSignup(e) {
   e.preventDefault();
-  const name = document.getElementById("signupName").value.trim();
-  const username = document.getElementById("signupUsername").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const phone = document.getElementById("signupPhone").value.trim();
-  const password = document.getElementById("signupPassword").value.trim();
+  var name = document.getElementById("signupName").value.trim();
+  var email = document.getElementById("signupEmail").value.trim();
+  var phone = document.getElementById("signupPhone").value.trim();
+  var password = document.getElementById("signupPassword").value.trim();
 
-  if (!name || !username || !email || !phone || !password) return;
+  if (!name || !email || !phone || !password) return;
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
+    return;
+  }
 
   try {
-    const res = await fetch(`${API_BASE}/auth/signup`, {
+    var res = await fetch(API_BASE + "/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, username, email, phone, password }),
+      body: JSON.stringify({ name, email, phone, password }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -90,10 +93,9 @@ async function handleSignup(e) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // If already logged in, go directly to dashboard / home
-  const existingUser = getUser();
-  if (existingUser && existingUser.role === "admin") {
+document.addEventListener("DOMContentLoaded", function () {
+  var existingUser = getUser();
+  if (existingUser && existingUser.id) {
     redirectAfterLogin(existingUser);
     return;
   }

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api";
+var API_BASE = window.API_BASE || "http://localhost:5000/api";
 
 function getToken() {
   return localStorage.getItem("token");
@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const avatarEl = document.getElementById("profileAvatar");
 
   const nameInput = document.getElementById("profileNameInput");
+  const usernameInput = document.getElementById("profileUsernameInput");
   const avatarInput = document.getElementById("profileAvatarInput");
   const bioInput = document.getElementById("profileBioInput");
   const deptInput = document.getElementById("profileDeptInput");
@@ -56,8 +57,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user = await apiGetMe();
 
     nameEl.textContent = user.name;
-    roleEl.textContent = user.role.toUpperCase();
+    roleEl.textContent = (user.username || user.role) + " • " + (user.role || "").toUpperCase();
     nameInput.value = user.name;
+    if (usernameInput) usernameInput.value = user.username || "";
 
     if (user.profile) {
       avatarInput.value = user.profile.avatarUrl || "";
@@ -75,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       try {
-        const updated = await apiUpdateMe({
+        const payload = {
           name: nameInput.value,
           profile: {
             avatarUrl: avatarInput.value,
@@ -83,7 +85,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             department: deptInput.value,
             year: yearInput.value,
           },
-        });
+        };
+        if (usernameInput && usernameInput.value.trim()) payload.username = usernameInput.value.trim();
+        const updated = await apiUpdateMe(payload);
         localStorage.setItem("user", JSON.stringify(updated));
         alert("Profile updated.");
       } catch (err) {

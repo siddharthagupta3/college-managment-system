@@ -5,15 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email Verification - CMS</title>
   <link rel="stylesheet" href="signup.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
+  <div class="container auth-page">
     <div class="form-box login">
       <h1>Email Verification</h1>
-      <p>If you clicked the link in your email, your account should now be verified. You can close this page and log in.</p>
-      <a href="singup.html" class="btn" style="display:inline-block;text-align:center;line-height:48px;">Go to Login</a>
+      <p id="verifyMessage" class="form-hint">Verifying your email…</p>
+      <a href="singup.html" id="loginLink" class="btn" style="display:none;margin-top:1rem;text-align:center;line-height:48px;">Go to Login</a>
     </div>
   </div>
+  <script src="../config.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get("token");
+      var msg = document.getElementById("verifyMessage");
+      var link = document.getElementById("loginLink");
+      var API_BASE = window.API_BASE || "http://localhost:5000/api";
+
+      if (!token) {
+        msg.textContent = "Missing verification link. Check your email for the correct link.";
+        msg.style.color = "#dc2626";
+        link.style.display = "inline-block";
+        return;
+      }
+
+      fetch(API_BASE + "/auth/verify-email?token=" + encodeURIComponent(token))
+        .then(function (res) {
+          return res.text().then(function (text) { return { ok: res.ok, text: text }; });
+        })
+        .then(function (r) {
+          if (r.ok) {
+            msg.textContent = "Email verified successfully. You can log in now.";
+            msg.style.color = "#22c55e";
+          } else {
+            msg.textContent = r.text || "Verification failed or link expired. Try signing up again.";
+            msg.style.color = "#dc2626";
+          }
+          link.style.display = "inline-block";
+        })
+        .catch(function () {
+          msg.textContent = "Could not reach server. Check your connection and try again.";
+          msg.style.color = "#dc2626";
+          link.style.display = "inline-block";
+        });
+    })();
+  </script>
 </body>
 </html>
-

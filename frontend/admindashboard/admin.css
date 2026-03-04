@@ -243,6 +243,12 @@
     margin-top: 0.5rem;
 }
 
+.profile-form .muted {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-weight: normal;
+}
+
 .profile-form label {
     font-size: 0.85rem;
     color: #e5e7eb;
