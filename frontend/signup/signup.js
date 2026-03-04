@@ -18,17 +18,22 @@ function saveAuth(data) {
   localStorage.setItem("user", JSON.stringify(data.user));
 }
 
+function getUser() {
+  try {
+    return JSON.parse(localStorage.getItem("user") || "null");
+  } catch {
+    return null;
+  }
+}
+
 function redirectAfterLogin(user) {
   if (!user || !user.role) {
     window.location.href = "../index.html";
     return;
   }
-  if (user.role === "admin") {
-    window.location.href = "../admindashboard/admin.html";
-  } else {
-    // For now, send faculty/students to landing page (you can add dashboards later)
-    window.location.href = "../index.html";
-  }
+  // For now, all roles share the same dashboard;
+  // backend still enforces role-based permissions.
+  window.location.href = "../admindashboard/admin.html";
 }
 
 async function handleLogin(e) {
@@ -60,25 +65,25 @@ async function handleLogin(e) {
 async function handleSignup(e) {
   e.preventDefault();
   const name = document.getElementById("signupName").value.trim();
+  const username = document.getElementById("signupUsername").value.trim();
   const email = document.getElementById("signupEmail").value.trim();
+  const phone = document.getElementById("signupPhone").value.trim();
   const password = document.getElementById("signupPassword").value.trim();
-  const role = document.getElementById("signupRole").value;
 
-  if (!name || !email || !password || !role) return;
+  if (!name || !username || !email || !phone || !password) return;
 
   try {
     const res = await fetch(`${API_BASE}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role }),
+      body: JSON.stringify({ name, username, email, phone, password }),
     });
     const data = await res.json();
     if (!res.ok) {
       alert(data.message || "Signup failed");
       return;
     }
-    saveAuth(data);
-    redirectAfterLogin(data.user);
+    alert(data.message || "Verification email sent. Please check your Gmail inbox.");
   } catch (err) {
     console.error(err);
     alert("Unable to register. Please try again.");

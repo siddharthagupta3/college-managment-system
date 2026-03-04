@@ -14,6 +14,9 @@ exports.updateMe = async (req, res) => {
         ...req.user.profile,
         ...profile,
       };
+      if (typeof profile.phone === "string") {
+        req.user.phone = profile.phone;
+      }
     }
 
     await req.user.save();
@@ -23,14 +26,29 @@ exports.updateMe = async (req, res) => {
   }
 };
 
-exports.getPublicProfile = async (req, res) => {
+exports.updateAvatar = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    if (!req.file) return res.status(400).json({ message: "Avatar file is required" });
+
+    const relative = `/uploads/avatars/${req.file.filename}`;
+    req.user.profile.avatarUrl = relative;
+    await req.user.save();
+
+    return res.json({ user: req.user.toSafeJSON() });
+  } catch (err) {
+    return res.status(500).json({ message: "Avatar update failed", error: err.message });
+  }
+};
+
+exports.getPublicProfileByUsername = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: String(req.params.username).toLowerCase() });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const safe = user.toSafeJSON();
-    // Keep profile page "Instagram-like" but safe by default
     delete safe.email;
+    delete safe.phone;
+
     return res.json({ user: safe });
   } catch (err) {
     return res.status(500).json({ message: "Fetch failed", error: err.message });

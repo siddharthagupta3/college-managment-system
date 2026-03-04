@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - CMS</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="ai-chat-wrapper">
+    <div class="ai-chat-card">
+      <h1>My Profile</h1>
+      <p class="ai-subtitle">Update your details and bio.</p>
+      <div id="profileCard" class="profile-card-instagram">
+        <div class="profile-header">
+          <div id="profileAvatar" class="profile-avatar-lg"></div>
+          <div class="profile-main-info">
+            <h2 id="profileName"></h2>
+            <p id="profileRole" class="tagline"></p>
+          </div>
+        </div>
+        <form id="profileForm" class="profile-form">
+          <label>
+            Full Name
+            <input id="profileNameInput" type="text" />
+          </label>
+          <label>
+            Avatar URL
+            <input id="profileAvatarInput" type="url" placeholder="https://..." />
+          </label>
+          <label>
+            Bio
+            <textarea id="profileBioInput" rows="3"></textarea>
+          </label>
+          <div class="profile-grid">
+            <label>
+              Department
+              <input id="profileDeptInput" type="text" />
+            </label>
+            <label>
+              Year
+              <input id="profileYearInput" type="text" />
+            </label>
+          </div>
+          <button type="submit" class="btn-primary small">Save Profile</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="profile.js"></script>
+</body>
+</html>
+

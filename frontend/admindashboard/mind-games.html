@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mind Games - CMS</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="ai-chat-wrapper">
+    <div class="ai-chat-card">
+      <h1>Mind Games Arena</h1>
+      <p class="ai-subtitle">Sharpen your focus with quick brain challenges.</p>
+      <div class="games-tabs">
+        <button data-game="memory" class="game-tab active">Memory Grid</button>
+        <button data-game="sequence" class="game-tab">Pattern Sequence</button>
+        <button data-game="reaction" class="game-tab">Reaction Speed</button>
+      </div>
+      <div id="gameMemory" class="game-panel active">
+        <div id="memoryGrid" class="memory-grid"></div>
+        <p id="memoryStatus" class="game-status"></p>
+      </div>
+      <div id="gameSequence" class="game-panel">
+        <div id="sequenceDisplay" class="sequence-display"></div>
+        <div class="sequence-controls">
+          <button id="startSequence" class="btn-primary small">Start Pattern</button>
+          <button id="repeatSequence" class="btn-primary small">Repeat</button>
+        </div>
+        <p id="sequenceStatus" class="game-status"></p>
+      </div>
+      <div id="gameReaction" class="game-panel">
+        <div id="reactionBox" class="reaction-box">Click when it turns green</div>
+        <p id="reactionStatus" class="game-status"></p>
+      </div>
+    </div>
+  </div>
+  <script src="mind-games.js"></script>
+</body>
+</html>
+

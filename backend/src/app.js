@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -28,6 +29,12 @@ function createApp() {
   app.use(cors(buildCorsOptions()));
   app.use(express.json({ limit: "1mb" }));
   app.use(morgan("dev"));
+  app.use(
+    "/uploads",
+    express.static(path.join(__dirname, "..", "uploads"), {
+      maxAge: "7d",
+    })
+  );
 
   app.get("/health", (req, res) => res.json({ ok: true }));
 

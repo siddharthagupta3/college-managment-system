@@ -157,6 +157,17 @@ async function sendMessage(text) {
   appendMessage(data.message);
 }
 
+async function reactToMessage(messageId, emoji) {
+  const res = await fetch(`${API_BASE}/messages/${messageId}/react`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeaders() },
+    body: JSON.stringify({ emoji }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "React failed");
+  return data.message;
+}
+
 function setupSocket(user) {
   const token = getToken();
   if (!token || typeof io === "undefined") return;
@@ -179,7 +190,7 @@ function setupSocket(user) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   const user = getUser();
-  if (!user || user.role !== "admin") {
+  if (!user) {
     window.location.href = "../signup/singup.html";
     return;
   }
@@ -200,25 +211,36 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  document
-    .getElementById("createGroupBtn")
-    ?.addEventListener("click", createGroupFlow);
+  const createBtn = document.getElementById("createGroupBtn");
+  if (createBtn) {
+    if (user.role === "admin" || user.role === "faculty") {
+      createBtn.addEventListener("click", createGroupFlow);
+    } else {
+      createBtn.disabled = true;
+      createBtn.classList.add("disabled");
+    }
+  }
 
   const form = document.getElementById("messageForm");
   const input = document.getElementById("messageInput");
   if (form && input) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-      try {
-        await sendMessage(text);
-        input.value = "";
-      } catch (err) {
-        console.error(err);
-        alert(err.message || "Unable to send message");
-      }
-    });
+    if (user.role === "admin" || user.role === "faculty") {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        try {
+          await sendMessage(text);
+          input.value = "";
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Unable to send message");
+        }
+      });
+    } else {
+      input.disabled = true;
+      input.placeholder = "Only admins and faculty can send messages.";
+    }
   }
 
   await loadGroups();
