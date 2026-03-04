@@ -1,94 +1,2122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>College Management System</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CMS - Future of College Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #fda085 100%);
+            --dark-bg: #0a0a0f;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-cyan: #06b6d4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0f, #1a1a2e, #16213e);
+            overflow: hidden;
+        }
+
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8b5cf6, transparent);
+            top: -200px;
+            left: -200px;
+            animation-duration: 25s;
+        }
+
+        .orb2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #ec4899, transparent);
+            bottom: -200px;
+            right: -200px;
+            animation-duration: 30s;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #06b6d4, transparent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 35s;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(100px, -100px) scale(1.1); }
+            50% { transform: translate(-100px, 100px) scale(0.9); }
+            75% { transform: translate(50px, 50px) scale(1.05); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.75rem 2rem;
+            background: rgba(10, 10, 15, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--primary-gradient);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .icon-ai { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+        .icon-cloud { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+        .icon-quantum { background: linear-gradient(135deg, #10b981, #06b6d4); }
+        .icon-blockchain { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 30px;
+            margin: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 2rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .rating {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating i {
+            color: #fbbf24;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-purple);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-purple);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-visual {
+                margin-top: 2rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-circle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .footer-bottom{
+   display:block !important;
+   text-align:center;
+   padding:20px 0;
+   color:#aaa;
+   background:#000;
+}
+.designer{
+   text-align:center;
+   color:#aaa;
+   margin-top:8px;
+}
+
+.designer span{
+   color:#4da6ff;
+   font-weight:600;
+   text-shadow:0 0 10px #4da6ff55;
+}
+
+/* ===== FINAL HORIZONTAL SCROLL FIX ===== */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body > * {
+    max-width: 100%;
+}
+
+/* Most common problem fix */
+[class*="container"],
+.hero,
+.nav-container,
+section,
+footer {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* If anywhere 100vw used */
+* {
+    max-width: 100%;
+}
+
+    </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-circle"></div>
+    </div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div>Email: info@college.com</div>
-  <div>Call: +91 99999 </div>
-  <button class="apply-btn">Apply Now</button>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-orb orb1"></div>
+        <div class="floating-orb orb2"></div>
+        <div class="floating-orb orb3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                CMS
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="signup/singup.html" class="nav-cta" onclick="showToast('Welcome to CMS!')">Get Started</a>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-badge">🚀 Innovating Tomorrow, Today</span>
+                <h1>Shape the Future with <span class="gradient-text">College Manegment System</span></h1>
+                <p>Experience the convergence of AI,  Transform your management with solutions that transcend boundaries.</p>
+                <div class="hero-buttons">
+                    <a href="./signup/singup.html" class="btn-primary" onclick="showToast('Starting your journey!')">
+                        Start Free account
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="video/demo.mp4" class="btn-secondary" onclick="showToast('Playing demo video')">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 1rem;">Core Technologies</h3>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon icon-ai">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">AI ChatBoat</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> AI messaging platform</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-cloud">
+                                <i class="fas fa-cloud"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Mind Game</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);"> Play interactive games</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-quantum">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">News</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Upteds with latest news</div>
+                            </div>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon icon-blockchain">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">Smart Contracts</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Automated contract execution</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Revolutionary Features</h2>
+                <p>Discover the cutting-edge capabilities that set us apart</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Autonomous AI</h3>
+                    <p>Self-learning algorithms that adapt and evolve with your data, providing insights that grow smarter over time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Mind Game</h3>
+                    <p>Interactive games designed to enhance cognitive skills and mental agility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>News</h3>
+                    <p>Stay updated with the latest news and trends in technology and innovation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>india reach</h3>
+                    <p>Our platform is accessible across India with localized content and support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Visualize complex data streams with interactive dashboards and predictive modeling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer First</h3>
+                    <p>Comprehensive APIs, SDKs, and documentation to accelerate your development workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="99.9">0</div>
+                    <div class="stat-label">% Uptime</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="10">0</div>
+                    <div class="stat-label">Million+ Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="150">0</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">/7 Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trusted by professionals teaching in India</h2>
+                <p>See what our customers have to say about their experience</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">"CMS has transformed our entire infrastructure. The AI capabilities alone have increased our efficiency by 300%."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>ritika</h4>
+                            <p>Teacher, School of Excellence</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">"The platform has significantly improved our teaching efficiency and student engagement."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ms</div>
+                        <div class="author-info">
+                            <h4>muskan singh</h4>
+                            <p>Teacher, School of technology</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-content">"The platform has made teaching more interactive and engaging for both teachers and students."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div class="author-info">
+                            <h4>Akshay kumar</h4>
+                            <p>Teacher, Bitspilani </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Future?</h2>
+            <p>Join thousands of educators already using CMS to enhance their teaching and student engagement.</p>
+            <div class="hero-buttons" style="justify-content: center;">
+                <a href="./signup/singup.html" class="btn-primary" onclick="showToast('Starting your free trial!')">
+                    Start Free Trial
+                    <i class="fas fa-rocket"></i>
+                </a>
+                <a href="#" class="btn-secondary" onclick="showToast('Contacting sales team')">
+                    talk to connect
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CMS</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">College Management System</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>CMS TEAM</h3>
+                <ul>
+                    <li><a href="cmsteam/sid.html">Siddhartha Gupta</a></li>
+                    <li><a href="cmsteam/mausam.html">Mausham kumar</a></li>
+                    <li><a href="cmsteam/yishu.html">Yishu Raj</a></li>
+                    <li><a href="cmsteam/yashwant.html">Yashwant Kumar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="legal/privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal/terms.html">Terms of Service</a></li>
+                    <li><a href="legal/cookies.html">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Status Page</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CMS. All rights reserved.</p>
+            <p class="designer">Designed by <span> Siddhartha gupta</span></p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-message" id="toastMessage">Action completed!</div>
+    </div>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animated counter for stats
+        const animateCounter = (element) => {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = current.toFixed(1);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target % 1 === 0 ? target : target.toFixed(1);
+                }
+            };
+
+            updateCounter();
+        };
+
+        // Intersection Observer for stats animation
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        if (stat.textContent === '0') {
+                            animateCounter(stat);
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'rgba(10, 10, 15, 0.95)';
+            navLinks.style.padding = '1rem';
+            navLinks.style.borderTop = '1px solid var(--glass-border)';
+        }
+
+        // Parallax effect for hero section (fixed)
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                // Reduced parallax effect and opacity change for smoother experience
+                heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
+                heroContent.style.opacity = Math.max(0, 1 - scrolled / 1200);
+            }
+        });
+
+        // Add hover effect to cards
+        document.querySelectorAll('.feature-card, .testimonial-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Dynamic year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const year = new Date().getFullYear();
+            const footerYear = document.querySelector('.footer-bottom p');
+            if (footerYear) {
+                footerYear.innerHTML = footerYear.innerHTML.replace('2025', year);
+            }
+        });
+    </script>
+
+<!-- ================= CMS PRO MAX AI ================= -->
+
+<style>
+
+/* ================= ROOT THEME ================= */
+:root{
+  --bg-dark: rgba(15,15,30,0.98);
+  --bg-light: #ffffff;
+  --bot-dark:#2b2b2b;
+  --bot-light:#f1f1f1;
+  --text-dark:white;
+  --text-light:black;
+  --primary:linear-gradient(135deg,#6a5cff,#ff4ecd);
+}
+
+/* ================= FLOAT BUTTON ================= */
+.chat-toggle{
+    position:fixed;
+    right:25px;
+    bottom:110px;
+    width:75px;
+    height:75px;
+    z-index:9999;
+    cursor:pointer;
+    animation:float 3s ease-in-out infinite;
+}
+
+.chat-toggle img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
+    transition: transform .3s ease;
+}
+
+.chat-toggle img:hover{
+    transform:scale(1.1);
+}
+
+/* Floating animation */
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0);}
+}
+
+/* Cute blink */
+@keyframes blink{
+    0%,90%,100%{ opacity:1;}
+    95%{ opacity:0.5;}
+}
+
+.chat-toggle img{
+    animation:blink 4s infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-6px)}
+    100%{transform:translateY(0)}
+}
+
+/* ================= CHAT BOX ================= */
+.chat-box{
+    position:fixed;
+    right:20px;
+    bottom:190px;
+    width:95%;
+    max-width:400px;
+    height:550px;
+    background:var(--bg-dark);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 0 60px rgba(0,0,0,.8);
+    z-index:9999;
+}
+
+/* ================= HEADER ================= */
+.chat-header{
+    padding:15px;
+    background:var(--primary);
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:bold;
+}
+
+/* ================= BODY ================= */
+.chat-body{
+    flex:1;
+    padding:12px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+}
+
+/* ================= MESSAGE ================= */
+.msg{
+    max-width:80%;
+    padding:10px 14px;
+    margin:6px 0;
+    border-radius:18px;
+    font-size:14px;
+    animation:fadeIn .3s ease;
+}
+.user{
+    align-self:flex-end;
+    background:var(--primary);
+    color:white;
+    border-bottom-right-radius:5px;
+}
+.bot{
+    align-self:flex-start;
+    background:var(--bot-dark);
+    color:var(--text-dark);
+    border-bottom-left-radius:5px;
+}
+
+.time{
+    font-size:10px;
+    opacity:.6;
+    margin-top:3px;
+}
+.tick{
+    font-size:12px;
+    margin-left:5px;
+}
+
+/* ================= FOOTER ================= */
+.chat-footer{
+    padding:10px;
+    display:flex;
+    background:#111;
+}
+.chat-footer input{
+    flex:1;
+    padding:8px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    font-size:16px;
+}
+.chat-footer button{
+    margin-left:6px;
+    padding:8px 12px;
+    border:none;
+    border-radius:10px;
+    background:var(--primary);
+    color:white;
+    cursor:pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:600px){
+  .chat-box{
+    right:10px;
+    bottom:140px;
+    width:95%;
+    height:75vh;
+  }
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+</style>
+
+<div class="chat-toggle" onclick="toggleChat()">
+   <img src="https://cdn-icons-png.flaticon.com/512/4712/4712100.png" alt="AI Assistant">
 </div>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <h2>FOX <span>University</span></h2>
-  <ul>
-    <li>Home</li>
-    <li>About</li>
-    <li>Courses</li>
-    <li>Staff</li>
-    <li>Contact</li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-text">
-    <h1>University, College<br/>School Education</h1>
-    <p>The best platform for students and teachers.</p>
-    <button class="primary">Contact Us</button>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-  <div class="card orange">
-    <h3>Certified Teachers</h3>
-    <p>Experienced and qualified faculty.</p>
-  </div>
-  <div class="card dark">
-    <h3>Special Education</h3>
-    <p>Support for every student.</p>
-  </div>
-  <div class="card orange">
-    <h3>Book & Library</h3>
-    <p>Huge digital & physical library.</p>
-  </div>
-  <div class="card dark">
-    <h3>Sports Clubs</h3>
-    <p>Indoor & outdoor activities.</p>
-  </div>
-</section>
-
-<!-- FORM -->
-<section class="form-section">
-  <h2>Get Started Here</h2>
-  <input type="text" id="name" placeholder="Full Name"/>
-  <input type="email" id="email" placeholder="Email Address"/>
-  <input type="text" id="mobile" placeholder="Mobile Number"/>
-  <button onclick="submitForm()">Book Now</button>
-  <p id="msg"></p>
-</section>
-
-<!-- COURSES -->
-<section class="courses">
-  <h2>Our Popular Courses</h2>
-  <div class="course-grid">
-    <div class="course">
-      <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1" />
-      <h4>Business Management</h4>
-    </div>
-    <div class="course">
-      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644" />
-      <h4>Computer Science</h4>
-    </div>
-    <div class="course">
-      <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7" />
-      <h4>Psychology</h4>
+<div class="chat-box" id="chatBox">
+  <div class="chat-header">
+    CMS AI 🤖
+    <div>
+      <span onclick="toggleTheme()" style="cursor:pointer">🌗</span>
+      <span onclick="clearChat()" style="cursor:pointer">🗑</span>
+      <span onclick="toggleChat()" style="cursor:pointer">✖</span>
     </div>
   </div>
-</section>
 
-<footer>
-  © 2026 College Management System
-</footer>
+  <div class="chat-body" id="chatBody"></div>
 
-<script src="script.js"></script>
+  <div class="chat-footer">
+    <input type="text" id="chatInput" placeholder="Type message...">
+    <button onclick="startVoice()">🎤</button>
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+
+<script>
+
+/* ================= TOGGLE ================= */
+function toggleChat(){
+  const box=document.getElementById("chatBox");
+  box.style.display=box.style.display==="flex"?"none":"flex";
+  if(box.style.display==="flex" && !localStorage.getItem("greeted")){
+      addBotMessage("Hello 👋 Welcome to CMS AI Assistant!");
+      localStorage.setItem("greeted","yes");
+  }
+}
+
+/* ================= THEME ================= */
+let darkMode=true;
+function toggleTheme(){
+  const box=document.getElementById("chatBox");
+  darkMode=!darkMode;
+  if(darkMode){
+    box.style.background="rgba(15,15,30,0.98)";
+  }else{
+    box.style.background="#ffffff";
+  }
+}
+
+/* ================= CLEAR ================= */
+function clearChat(){
+  document.getElementById("chatBody").innerHTML="";
+}
+
+/* ================= TIME ================= */
+function getTime(){
+  const d=new Date();
+  return d.getHours()+":"+d.getMinutes();
+}
+
+/* ================= 40+ REPLIES ================= */
+const replies={
+"hello":"Hello 👋 Kaise madad kar sakta hoon?",
+"hi":"Hi 🚀 Welcome to CMS AI!",
+"admission":"Admission process open hai.",
+"fees":"Fees dashboard me milega.",
+"exam":"Exam schedule available hai.",
+"result":"Result jaldi upload hoga.",
+"admin":"Admin group manage kar sakta hai.",
+"faculty":"Faculty class manage kar sakta hai.",
+"student":"Student view kar sakta hai.",
+"group":"Group Admin ya Faculty bana sakte hain.",
+"attendance":"Attendance dashboard me milega.",
+"profile":"Profile section me details hai.",
+"college":"Ye College Management System hai.",
+"contact":"Contact page me support milega.",
+"thanks":"Welcome 😊",
+"bye":"Bye 👋",
+"namaste":"Namaste 🙏",
+
+"what is your name":"Mera naam CMS AI Assistant hai 🤖",
+"your creator":"Mujhe CMS project ke liye develop kiya gaya hai.",
+"who made you":"Mujhe Siddhartha ne develop kiya hai 👨‍💻",
+"college name":"Ye College Management System project hai.",
+"where are you from":"Main web browser ke andar rehta hoon 😄",
+"can you help me":"Bilkul! Main help ke liye hi bana hoon.",
+"are you real":"Main virtual AI assistant hoon 🤖",
+"how does this work":"Ye system frontend + backend par kaam karta hai.",
+"what can you do":"Main admission, fees, exam, result info de sakta hoon.",
+"system info":"Ye ek modern web based system hai.",
+"how to login":"Login button header me available hai.",
+"how to register":"Signup option se account bana sakte hain.",
+"change email":"Profile settings me email change karein.",
+"change mobile":"Profile me mobile update karein.",
+"account locked":"Admin se contact karein.",
+"website slow":"Internet connection check karein.",
+"refresh page":"Page refresh karke dubara try karein.",
+"browser issue":"Chrome browser recommended hai.",
+"data safe":"Data secure authentication se protected hai.",
+"privacy":"Privacy policy footer me available hai.",
+"terms":"Terms & conditions footer me hai.",
+"cookies":"Cookies system login ke liye use hota hai.",
+"chat":"Chat feature communication ke liye hai.",
+"upload file":"File upload future update me milega.",
+"download":"Download option result page me milega.",
+"exam form":"Exam form admin panel me available hai.",
+"late fee":"Late fee details admin provide karega.",
+"scholarship":"Scholarship info notice board me milega.",
+"transport":"Transport details admin se milegi.",
+"canteen":"Canteen details campus section me milegi.",
+"sports":"Sports activities dashboard me milegi.",
+"events":"Events notice board me update hote hain.",
+"annual day":"Annual day info notice board me milegi.",
+"seminar":"Seminar details faculty section me milegi.",
+"workshop":"Workshop announcements admin karta hai.",
+"holiday list":"Holiday list calendar section me milegi.",
+"exam date":"Exam dates exams section me hai.",
+"internal marks":"Internal marks dashboard me milega.",
+"external marks":"External marks result page me milega.",
+"attendance percentage":"Attendance percentage profile me show hoga.",
+"minimum attendance":"Minimum attendance 75% required hoti hai.",
+"fee payment":"Online payment future update me add hoga.",
+"payment status":"Payment status dashboard me check karein.",
+"receipt":"Receipt download option available hoga.",
+"complaint form":"Complaint contact section me bhejein.",
+"technical issue":"Technical issue ke liye support contact karein.",
+"bug":"Bug report developer ko bhejein.",
+"system error":"System error temporary ho sakta hai.",
+"maintenance":"System maintenance ke dauran kuch feature band ho sakte hain.",
+"new admission":"New admission form signup se bharein.",
+"drop year":"Drop year details admin se confirm karein.",
+"migration":"Migration certificate admin se milega.",
+"transfer certificate":"TC admin office se milega.",
+"bonafide":"Bonafide certificate admin generate karega.",
+"character certificate":"Character certificate admin issue karega.",
+"fees due":"Fees due dashboard me show hoga.",
+"installment":"Installment option admin provide karega.",
+"refund":"Refund policy admin confirm karega.",
+"late submission":"Late submission par penalty lag sakti hai.",
+"exam center":"Exam center details admit card me milegi.",
+"admit card":"Admit card exams section se download karein.",
+"revaluation":"Revaluation form result section me milega.",
+"improvement exam":"Improvement exam details admin provide karega.",
+"faculty login":"Faculty login separate page par hai.",
+"admin login":"Admin login alag secure page par hai.",
+"student login":"Student login homepage par available hai.",
+"profile photo":"Profile photo upload option profile me hai.",
+"change password help":"Settings me password change karein.",
+"reset email":"Email reset admin approval se hoga.",
+"verify email":"Verification email check karein.",
+"otp not received":"Spam folder check karein.",
+"resend otp":"Resend OTP option use karein.",
+"chat not working":"Page refresh karke try karein.",
+"dark mode":"Dark mode toggle header me hai.",
+"light mode":"Light mode toggle header me hai.",
+"voice message":"Mic button se voice message bhejein.",
+"blue tick":"Blue tick ka matlab message seen ho gaya.",
+"message delivered":"Double tick ka matlab delivered.",
+"notification sound":"Notification sound future update me add hoga.",
+"group create":"Group admin create kar sakta hai.",
+"group delete":"Group delete sirf admin kar sakta hai.",
+"group member":"Group members admin add karega.",
+"group remove":"Admin kisi ko remove kar sakta hai.",
+"faculty remove admin":"Faculty admin ko remove nahi kar sakta.",
+"student remove":"Student remove nahi kar sakta.",
+"react message":"Message par react feature available hai.",
+"like message":"Message par like kar sakte hain.",
+"emoji":"Emoji support future update me milega.",
+"file share":"File share future version me milega.",
+"photo share":"Photo share update me add hoga.",
+"video share":"Video share upcoming feature hai.",
+"live class":"Live class future update me milegi.",
+"zoom link":"Zoom link notice board me milega.",
+"meet link":"Meet link faculty provide karega.",
+"attendance mark":"Attendance faculty mark karega.",
+"result publish":"Result admin publish karega.",
+"course list":"Course list academic section me milegi.",
+"branch":"Branch details profile me milegi.",
+"department":"Department info about page me hai.",
+"contact admin":"Admin se contact contact page se karein.",
+"support email":"Support email footer me diya hai.",
+"developer contact":"Developer contact about section me hai.",
+"project guide":"Project guide faculty section me hai.",
+"cms meaning":"CMS = College Management System.",
+"future scope":"Future scope me AI integration hoga.",
+"ai integration":"AI integration future update me hoga.",
+"database type":"Database system me store hota hai.",
+"server status":"Server active hai.",
+"login error":"Login credentials check karein.",
+"signup error":"Valid details enter karein.",
+"invalid password":"Password minimum 6 character ka hona chahiye.",
+"invalid email":"Valid Gmail enter karein.",
+"system secure":"System secure encryption use karta hai.",
+"thanks a lot":"Most welcome 😊",
+"good evening":"Good evening 🌇",
+"good afternoon":"Good afternoon ☀️",
+"what time":"Current time browser ke top me dekhein.",
+"who is admin":"Admin system manage karta hai.",
+"who is faculty":"Faculty classes manage karta hai.",
+"who is student":"Student system ka user hai.",
+"system design":"System responsive UI use karta hai.",
+"responsive":"System phone aur laptop dono me chalega.",
+"mobile version":"Mobile responsive design use kiya gaya hai.",
+"laptop version":"Laptop version optimized hai.",
+"open source":"Ye project educational purpose ke liye hai.",
+"future version":"Next version me advanced AI aayega.",
+"beta version":"Ye demo version hai.",
+"live version":"Live version future me deploy hoga.",
+"hosting":"Hosting ke liye server required hai.",
+"domain":"Domain website ka address hota hai.",
+"project cost":"Project educational demo hai.",
+"thank u":"Welcome 😊",
+"ok thanks":"No problem 😄",
+"fine":"Great 👍",
+"great":"Awesome 😄",
+"awesome":"Thank you 😎",
+"cool":"Cool 😄",
+"nice":"Nice to hear that 😊",
+"good":"Good 👍",
+"perfect":"Perfect 👌",
+"super":"Super 🚀",
+"wow":"Wow 😄",
+"amazing":"Amazing 🎉",
+"nice":"Thank you 😊",
+"very nice":"Bahut accha laga sun kar 😄",
+"good job":"Thanks 👍",
+"great work":"Shukriya 🚀",
+"awesome work":"Amazing 😎",
+"hello bro":"Hello 😄",
+"hello sir":"Namaste sir 🙏",
+"how are you":"Main theek hoon 😊",
+"kaise ho":"Main badhiya hoon 😄",
+"kya haal hai":"Sab badhiya 👍",
+"where are you from":"Main web system ke andar hoon 🤖",
+"kaha se ho":"Main online AI assistant hoon 🌐",
+"who are you":"Main CMS AI Assistant hoon 🤖",
+"what is your name":"Mera naam CMS AI hai.",
+"tum kaun ho":"Main aapka AI helper hoon.",
+"can we talk":"Bilkul baat kar sakte hain 😄",
+"are you human":"Nahi, main AI hoon 🤖",
+"real ho kya":"Main virtual AI hoon.",
+"system kaisa hai":"System fully responsive hai.",
+"project kiska hai":"Ye CMS project hai.",
+"siddhartha gupta kaun hai":"Siddhartha Gupta developer hain 👨‍💻",
+"siddhartha gupta kese hai":"Woh ek hardworking developer hain.",
+"siddhartha gupta ke baare me batao":"Woh CMS project ke developer hain.",
+"siddhartha gupta ne code kaise banaya":"Unhone HTML, CSS, JS se system develop kiya.",
+"siddhartha gupta smart hai kya":"Haan, woh dedicated developer hain.",
+"siddhartha gupta student hai kya":"Haan, woh engineering student hain.",
+"siddhartha gupta ka college":"Ye college project ke liye bana hai.",
+"source code milega kya":"Source code ke liye developer se contact karein.",
+"source code do":"Source code ke liye Siddhartha Gupta se baat karein.",
+"github link":"GitHub par project upload ho sakta hai.",
+"contact siddhartha":"Unse directly baat karein.",
+"developer contact":"Developer contact about page me milega.",
+"cms ka future":"Future me AI integration hoga.",
+"project future":"Project scalable hai.",
+"update kab aayega":"Update jaldi aayega.",
+"new feature":"New feature soon add hoga.",
+"backend konsa hai":"Backend Node.js based hai.",
+"frontend konsa hai":"Frontend HTML CSS JS se bana hai.",
+"database konsa hai":"Database me student data store hota hai.",
+"responsive hai kya":"Haan phone aur laptop dono me chalega.",
+"dark mode hai kya":"Haan dark/light toggle available hai.",
+"voice message hai kya":"Haan mic feature available hai.",
+"blue tick kya hai":"Blue tick ka matlab message seen.",
+"group kaise banega":"Group admin create karega.",
+"faculty kya kar sakta hai":"Faculty manage kar sakta hai.",
+"student kya kar sakta hai":"Student view kar sakta hai.",
+"admin kya karega":"Admin sab manage karega.",
+"login kaha hai":"Header me login button hai.",
+"signup kaha hai":"Header me signup option hai.",
+"profile kaha hai":"Profile section me milega.",
+"logout kaha hai":"Header me logout option hai.",
+"attendance kaha milegi":"Dashboard me milegi.",
+"result kaha milega":"Result page me milega.",
+"fees kaha milegi":"Fees section me milegi.",
+"exam kab hai":"Exam schedule dashboard me hai.",
+"holiday kab hai":"Holiday list calendar me hai.",
+"thank you":"Welcome 😊",
+"thanks bro":"Anytime 😄",
+"ok":"Theek hai 👍",
+"bye":"Bye 👋",
+"good morning":"Good morning ☀️",
+"good night":"Good night 🌙",
+"good evening":"Good evening 🌆",
+"good afternoon":"Good afternoon ☀️",
+"wow":"Wow 😄",
+"super":"Super 🚀",
+"perfect":"Perfect 👌",
+"amazing":"Amazing 🎉",
+"cool":"Cool 😎",
+"fine":"Great 👍",
+"best project":"Thank you 😄",
+"future scope":"Future me AI upgrade hoga.",
+"hosting kaha hai":"Hosting server par hoti hai.",
+"domain kya hai":"Domain website ka address hai.",
+"netlify kya hai":"Netlify hosting platform hai.",
+"server kya hai":"Server backend run karta hai.",
+"node js kya hai":"Node.js backend environment hai.",
+"express kya hai":"Express backend framework hai.",
+"html kya hai":"HTML structure banata hai.",
+"css kya hai":"CSS design karta hai.",
+"javascript kya hai":"JavaScript logic handle karta hai.",
+"ai kya hai":"AI artificial intelligence hai.",
+"chatbot kya hai":"Chatbot automated assistant hota hai.",
+"real ai hai kya":"Ye demo AI logic based hai.",
+"upgrade hoga kya":"Future me upgrade possible hai.",
+"paid version hai kya":"Ye demo version hai.",
+"free hai kya":"Haan educational purpose ke liye hai.",
+"error aa raha hai":"Page refresh karke try karein.",
+"bug hai kya":"Developer ko report karein.",
+"system secure hai kya":"Haan authentication use hota hai.",
+"data safe hai kya":"Data secure hai.",
+"kaam ka project hai":"Haan practical project hai.",
+"placement milega kya":"Skills par depend karta hai.",
+"resume me dal sakte hai":"Haan project add kar sakte hain.",
+"certificate milega kya":"Admin se confirm karein.",
+"id card milega kya":"Admin generate karega.",
+"group chat real hai kya":"Demo version hai.",
+"message save hota hai kya":"Local browser me store hota hai.",
+"history delete kaise kare":"Clear chat button use karein.",
+"theme change kaise kare":"Header me theme toggle hai.",
+"mic kaise use kare":"Mic button press karein.",
+"emoji hai kya":"Future update me add hoga.",
+"file send hoga kya":"Future version me possible hai.",
+"video call hoga kya":"Future integration possible hai.",
+"live class hoga kya":"Future version me add hoga.",
+"zoom link kaha milega":"Notice board me milega.",
+"developer ka email":"About page me milega.",
+"project kitne din me bana":"Dedication se develop hua hai.",
+"cms ka full form":"College Management System.",
+"system fast hai kya":"Optimized hai.",
+"mobile me chalega kya":"Haan fully responsive hai.",
+"laptop me chalega kya":"Haan properly chalega.",
+"kaise use kare":"Signup karein aur login karein.",
+"registration kaise kare":"Signup form bharein.",
+"password bhul gya":"Forgot password option use karein.",
+"otp nahi aaya":"Spam folder check karein.",
+"admin ka role kya hai":"Admin sab control karta hai.",
+"faculty ka role kya hai":"Faculty class manage karta hai.",
+"student ka role kya hai":"Student learning karta hai.",
+"nice to meet you":"Nice to meet you too 😄",
+"love this project":"Thank you ❤️",
+"respect":"Dhanyavaad 🙏",
+/* ===== SIDDHARTHA GUPTA RELATED ===== */
+
+"siddhartha":"Siddhartha Gupta CMS ke developer hain 👨‍💻",
+"siddhartha gupta":"Woh is project ke creator hain.",
+"who is siddhartha":"Siddhartha Gupta ek developer hain.",
+"about siddhartha":"Woh engineering student aur coder hain.",
+"siddhartha kaun hai":"Woh CMS system ke developer hain.",
+"siddhartha kya karta hai":"Woh web development karta hai.",
+"siddhartha ka project":"Ye CMS unka project hai.",
+"siddhartha ne banaya":"Haan, system unhone develop kiya hai.",
+"siddhartha smart hai kya":"Haan, woh hardworking coder hain.",
+"siddhartha student hai":"Haan, woh BTech student hain.",
+"siddhartha coder hai":"Haan 👨‍💻",
+"siddhartha web developer":"Haan, frontend + backend dono jante hain.",
+"siddhartha ka future":"Woh software engineer banna chahte hain.",
+"siddhartha ka goal":"Tech field me career banana.",
+"siddhartha ka experience":"Unhone CMS jaisa project develop kiya hai.",
+"siddhartha ka skill":"HTML CSS JS aur backend skills.",
+"siddhartha ka github":"GitHub par project ho sakta hai.",
+"siddhartha contact":"Source code ke liye unse baat karein.",
+"siddhartha se baat kaise kare":"About page check karein.",
+"siddhartha ka resume":"Resume me CMS project add hai.",
+"siddhartha hardworking":"Haan, dedicated developer hain.",
+"siddhartha ka college project":"Ye unka academic project hai.",
+"siddhartha ne kaise banaya":"Step by step coding se.",
+"siddhartha ka idea":"College management ko digital banana.",
+"siddhartha ka vision":"Smart education system banana.",
+"siddhartha ka passion":"Programming aur development.",
+"siddhartha ka dedication":"Woh daily coding practice karte hain.",
+"siddhartha ka dream":"Top tech company me job.",
+"siddhartha ka source code":"Source code ke liye Siddhartha se contact karein.",
+"siddhartha ka email":"Developer section me milega.",
+"siddhartha se source code":"Unse directly baat karein.",
+"siddhartha ka linkedin":"LinkedIn profile check karein.",
+"siddhartha ka portfolio":"Portfolio future me launch hoga.",
+"siddhartha ka best project":"CMS unka strong project hai.",
+"siddhartha ka contribution":"Frontend + backend dono develop kiya.",
+"siddhartha ka improvement":"AI integration plan hai.",
+"siddhartha ka confidence":"High level coding confidence.",
+"siddhartha ka motivation":"Self growth aur learning.",
+"siddhartha ka future plan":"Advanced AI system banana.",
+"siddhartha developer hai kya":"Haan 👨‍💻",
+"siddhartha full stack hai":"Learning stage me hain.",
+"siddhartha backend jante hain":"Haan Node.js use karte hain.",
+"siddhartha frontend jante hain":"Haan HTML CSS JS use karte hain.",
+"siddhartha ka system":"Ye CMS unka kaam hai.",
+"siddhartha ka level":"Intermediate web developer.",
+"siddhartha ka support":"Unse contact karke support le sakte hain.",
+
+/* ===== WEBSITE / CMS RELATED ===== */
+
+"website":"Ye College Management System website hai.",
+"cms website":"CMS ek management portal hai.",
+"website ka purpose":"College data manage karna.",
+"website kis liye hai":"Students, faculty aur admin ke liye.",
+"website responsive hai":"Haan phone aur laptop dono me chalegi.",
+"website secure hai":"Basic authentication use hota hai.",
+"website fast hai":"Optimized design hai.",
+"website ka design":"Modern gradient UI.",
+"website ka feature":"Login, Signup, Chat, Dashboard.",
+"website ka backend":"Node.js based.",
+"website ka frontend":"HTML CSS JS based.",
+"website ka database":"Student data store karta hai.",
+"website ka admin panel":"Admin full control karta hai.",
+"website ka student panel":"Student view access karta hai.",
+"website ka faculty panel":"Faculty manage access karta hai.",
+"website ka group feature":"Admin group create kar sakta hai.",
+"website ka chat":"Demo AI chatbot integrated hai.",
+"website ka future":"AI upgrade planned hai.",
+"website ka update":"Future me new features add honge.",
+"website ka goal":"Digital college system banana.",
+"website ka vision":"Smart campus solution.",
+"website ka version":"Current version 1.0 demo.",
+"website ka hosting":"Server ya Netlify par host ho sakta hai.",
+"website ka domain":"Custom domain add ho sakta hai.",
+"website ka source code":"Source code ke liye Siddhartha se baat karein.",
+"website ka layout":"Clean aur modern layout.",
+"website ka theme":"Dark aur light mode supported.",
+"website ka voice feature":"Mic support available.",
+"website ka blue tick":"Seen status show karta hai.",
+"website ka chat history":"Local storage me save ho sakta hai.",
+"website ka profile":"User personal profile available.",
+"website ka dashboard":"Central control panel.",
+"website ka exam section":"Exam schedule show karta hai.",
+"website ka fees section":"Fees details show karta hai.",
+"website ka result section":"Result publish karta hai.",
+"website ka attendance":"Attendance dashboard me milegi.",
+"website ka notice board":"Announcements show karta hai.",
+"website ka security":"Basic protection enabled.",
+"website ka scalability":"Future upgrade possible.",
+"website ka maintenance":"Admin manage karega.",
+"website ka UI":"Futuristic gradient UI.",
+"website ka speed":"Lightweight optimized code.",
+"website ka deployment":"Online deploy kiya ja sakta hai.",
+"website ka improvement":"AI + database expansion possible.",
+"website ka expansion":"Mobile app version future me.",
+"website ka chatbot":"Rule based AI chatbot.",
+"website ka role system":"Admin Faculty Student roles.",
+"website ka notification":"Future me push notification.",
+"website ka integration":"API integration future me.",
+"website ka developer":"Siddhartha Gupta 👨‍💻",
+"default":[
+
+"Aap mujhse kuch bhi puch sakte hain 😊",
+"Ye mere data me nahi hai, kripya Siddhartha Gupta ya website se related sawal puchein.",
+"Kripya in topics se related question puchiye: Siddhartha Gupta ya CMS website.",
+"Main sirf developer aur website topic par jawab deta hoon.",
+"Is vishay ki jankari mere paas uplabdh nahi hai.",
+"Kya aap Siddhartha Gupta ke baare me jaana chahte hain?",
+"Kya aap website ke features ke baare me puchna chahte hain?",
+"Kya aap CMS ka full form jaana chahte hain?",
+"Kya aap source code chahte hain?",
+"Kya aap project ka working system samajhna chahte hain?",
+"Kya aap developer ka skillset jaana chahte hain?",
+"Kya aap website ka future plan puchna chahte hain?",
+"Kya aap backend technology ke baare me jaana chahte hain?",
+"Kya aap frontend design ke baare me puchna chahte hain?",
+"Kya aap admin panel ke baare me detail chahte hain?",
+"Kya aap student dashboard ke baare me puchna chahte hain?",
+"Kya aap security feature ke baare me jaana chahte hain?",
+"Kya aap login system ke baare me puchna chahte hain?",
+"Kya aap signup process ke baare me jaana chahte hain?",
+"Kya aap chat system ke baare me detail chahte hain?",
+"Kya aap dark mode feature ke baare me puchna chahte hain?",
+"Kya aap voice message system ke baare me jaana chahte hain?",
+"Kya aap CMS ka use case samajhna chahte hain?",
+"Kya aap project resume me add karna chahte hain?",
+"Kya aap GitHub repository ke baare me puchna chahte hain?",
+"Kya aap Siddhartha Gupta ka contact detail chahte hain?",
+"Kya aap website ka live demo chahte hain?",
+"Kya aap project ka architecture jaana chahte hain?",
+"Kya aap deployment process ke baare me puchna chahte hain?",
+"Kya aap database structure ke baare me jaana chahte hain?",
+"Kripya relevant topic par sawal puchein.",
+"Main aapki madad ke liye hamesha ready hoon 🚀",
+"Aap apna sawal thoda clear likhiye.",
+"Kripya CMS ya developer se related question puchiye.",
+"Main sirf limited topics par trained hoon.",
+"Aap website ya Siddhartha Gupta ke baare me puch sakte hain.",
+"Is topic par meri training nahi hai.",
+"Main CMS AI assistant hoon 🤖",
+"Kya aap kisi specific feature ke baare me jaana chahte hain?",
+"Agar aapko source code chahiye to developer se contact karein.",
+"Kya aap project ka objective jaana chahte hain?",
+"Kya aap CMS ka purpose samajhna chahte hain?",
+"Kya aap is project ka future upgrade puchna chahte hain?",
+"Aapka sawal system se related nahi lag raha.",
+"Kripya website ya developer par focus karein.",
+"Main sirf CMS project information provide karta hoon.",
+"Kya aap isi topic par aur detail chahte hain?",
+"Agar aapko help chahiye to clear question likhiye.",
+"Main aapko sahi direction me guide kar sakta hoon.",
+"Aap Siddhartha Gupta ke project ke baare me puch sakte hain.",
+"Kya aap aur information chahte hain?"
+]
+
+};
+
+let lastTopic = null;
+
+function getReply(text){
+    text = text.toLowerCase();
+
+    for(let key in replies){
+        if(key !== "default" && text.includes(key)){
+            lastTopic = key; // memory store
+            return replies[key];
+        }
+    }
+
+    // Smart Memory Based Default
+    if(lastTopic){
+        return getSmartFollowUp(lastTopic);
+    }
+
+    // Random default
+    const arr = replies.default;
+    return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function getSmartFollowUp(topic){
+
+    const followUps = {
+        "siddhartha":"Kya aap Siddhartha Gupta ke project ya source code ke baare me jaana chahte hain?",
+        "website":"Kya aap website ke features ya security ke baare me puchna chahte hain?",
+        "source code":"Source code ke liye Siddhartha Gupta se contact karein.",
+        "developer":"Developer ke skills ya experience ke baare me puch sakte hain.",
+        "cms":"CMS ke kaunse feature me interest hai aapko?"
+    };
+
+    if(followUps[topic]){
+        return followUps[topic];
+    }
+
+    return "Kya aap isi topic par aur detail chahte hain? 😊";
+}
+
+/* ================= MESSAGE ================= */
+function addUserMessage(text){
+  const msg=document.createElement("div");
+  msg.className="msg user";
+  msg.innerHTML=text+
+    "<div class='time'>"+getTime()+
+    "<span class='tick' id='tick'>✔✔</span></div>";
+  document.getElementById("chatBody").appendChild(msg);
+  scrollBottom();
+
+  setTimeout(()=>{
+    document.getElementById("tick").style.color="skyblue";
+  },1000);
+}
+
+function addBotMessage(text){
+  const msg=document.createElement("div");
+  msg.className="msg bot";
+  msg.innerHTML=text+"<div class='time'>"+getTime()+"</div>";
+  document.getElementById("chatBody").appendChild(msg);
+  scrollBottom();
+}
+
+/* ================= SCROLL ================= */
+function scrollBottom(){
+  const body=document.getElementById("chatBody");
+  body.scrollTop=body.scrollHeight;
+}
+
+/* ================= SEND ================= */
+function sendMessage(){
+  const input=document.getElementById("chatInput");
+  const text=input.value.trim();
+  if(!text) return;
+  addUserMessage(text);
+  input.value="";
+  setTimeout(()=>{
+    addBotMessage(getReply(text));
+  },800);
+}
+
+/* ================= ENTER KEY ================= */
+document.getElementById("chatInput")
+.addEventListener("keypress",function(e){
+  if(e.key==="Enter") sendMessage();
+});
+
+/* ================= VOICE ================= */
+function startVoice(){
+  if(!('webkitSpeechRecognition' in window)){
+    alert("Voice not supported in this browser");
+    return;
+  }
+  const recognition=new webkitSpeechRecognition();
+  recognition.lang="en-IN";
+  recognition.start();
+  recognition.onresult=function(event){
+    document.getElementById("chatInput").value=
+      event.results[0][0].transcript;
+    sendMessage();
+  };
+}
+
+</script>
+
+<!-- ================= END ================= -->
+
+
 </body>
 </html>

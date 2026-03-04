@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cookies Policy - CMS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:linear-gradient(-45deg,#0f0c29,#302b63,#24243e,#000000);
+background-size:400% 400%;
+animation:bgMove 10s ease infinite;
+color:white;
+overflow-x:hidden;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* Glass Container */
+
+.container{
+max-width:900px;
+margin:80px auto;
+padding:50px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(18px);
+border-radius:25px;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 50px rgba(255,140,0,0.25);
+animation:fadeIn .6s ease forwards;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+h1{
+font-size:40px;
+margin-bottom:20px;
+background:linear-gradient(90deg,#ff9900,#ff5500);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+h2{
+margin-top:30px;
+color:#ff9900;
+}
+
+p{
+line-height:1.8;
+color:#ddd;
+margin-top:10px;
+}
+
+/* Buttons */
+
+.buttons{
+margin-top:40px;
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:12px 25px;
+border-radius:30px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.home{
+background:linear-gradient(90deg,#ff9900,#ff5500);
+color:black;
+}
+
+.contact{
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+}
+
+.download{
+background:linear-gradient(90deg,#00ff99,#00cc66);
+color:black;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+@media(max-width:768px){
+.container{margin:40px 15px;padding:30px;}
+h1{font-size:28px;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cookies Policy</h1>
+
+<p>This Cookies Policy explains how College Management System (CMS) uses cookies and related technologies to improve security, performance, and user experience.</p>
+
+<h2>1. Purpose of Cookies</h2>
+<p>Cookies help authenticate users, manage sessions, remember preferences, and ensure system security.</p>
+
+<h2>2. Security & Authentication</h2>
+<p>Secure cookies verify login sessions and prevent unauthorized access. All authentication tokens are encrypted.</p>
+
+<h2>3. Performance Monitoring</h2>
+<p>We use analytical cookies to monitor system load, optimize database queries, and improve response speed.</p>
+
+<h2>4. Personalization</h2>
+<p>Cookies store selected language preferences (EN/HI), dashboard layout choices, and notification settings.</p>
+
+<h2>5. Third-Party Services</h2>
+<p>Third-party integrations may use limited cookies for analytics. No personal data is sold or shared.</p>
+
+<h2>6. User Control</h2>
+<p>You may disable cookies in browser settings. However, login and secure features may not function properly.</p>
+
+<h2>7. Updates & Compliance</h2>
+<p>This policy complies with modern data protection standards and may be updated when necessary.</p>
+
+<div class="buttons">
+<a href="index.html" class="btn home">Back to Home</a>
+<a href="contact.html" class="btn contact">Contact Admin</a>
+<a href="#" class="btn download">Download Policy</a>
+</div>
+
+</div>
+
+</body>
+</html>
