@@ -478,6 +478,24 @@ body.ui-paper .preview-wrap {
 	padding: 20px;
 	background: white;
 	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0 auto;
+	overflow: visible;
+}
+
+#resume-preview-export {
+	width: 794px !important;
+	height: auto !important;
+	max-width: 794px !important;
+	max-height: 1123px !important;
+	padding: 20px !important;
+	margin: 0 !important;
+	background: white !important;
+	overflow: visible !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	box-sizing: border-box !important;
+	display: block !important;
 }
 
 .resume-doc::before {
@@ -2385,12 +2403,26 @@ body.ui-paper .preview-wrap {
 @media print {
 	body {
 		margin: 0;
+		padding: 0;
 	}
 
 	#resume-preview {
-		width: 210mm;
-		height: 297mm;
-		page-break-inside: avoid;
-		break-inside: avoid;
+		width: 794px;
+		height: 1123px;
+		max-width: 794px;
+		max-height: 1123px;
+		overflow: hidden;
+		margin: 0;
+		padding: 20px;
+		background: white;
+	}
+
+	#resume-preview * {
+		page-break-after: avoid !important;
+		page-break-before: avoid !important;
+		page-break-inside: avoid !important;
+		break-after: avoid !important;
+		break-before: avoid !important;
+		break-inside: avoid !important;
 	}
 }

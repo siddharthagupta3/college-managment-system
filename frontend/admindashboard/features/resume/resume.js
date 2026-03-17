@@ -1484,118 +1484,144 @@ async function loadResumeById() {
 }
 
 async function downloadPdf() {
+	const filename = `${(state.personal.name || "resume").replace(/\s+/g, "_")}.pdf`;
+	
 	try {
-		const filename = `${(state.personal.name || "resume").replace(/\s+/g, "_")}.pdf`;
-		const html2canvasLib = window.html2canvas;
-		const hasJspdf = Boolean(window.jspdf && window.jspdf.jsPDF);
-		const hasHtml2Pdf = typeof window.html2pdf === "function";
-
-		if (!hasHtml2Pdf && (typeof html2canvasLib !== "function" || !hasJspdf)) {
-			throw new Error("PDF libraries are not loaded");
+		// Check if html2canvas and jsPDF are loaded
+		if (typeof window.html2canvas !== "function" || !window.jspdf || !window.jspdf.jsPDF) {
+			throw new Error("PDF libraries (html2canvas, jsPDF) are not loaded");
 		}
 
-		const exportWrapper = document.createElement("div");
-		exportWrapper.setAttribute("data-export-wrapper", "resume");
-		exportWrapper.style.position = "fixed";
-		exportWrapper.style.left = "-100000px";
-		exportWrapper.style.top = "0";
-		exportWrapper.style.width = "794px";
-		exportWrapper.style.padding = "0";
-		exportWrapper.style.margin = "0";
-		exportWrapper.style.background = "#ffffff";
-		exportWrapper.style.zIndex = "-1";
+		// 1. CLONE resume DOM into hidden container
+		const clone = el.resumeDoc.cloneNode(true);
+		const container = document.createElement("div");
+		container.style.position = "fixed";
+		container.style.left = "-9999px";
+		container.style.top = "0";
+		container.style.width = "794px";
+		container.style.height = "1123px";
+		container.style.padding = "0";
+		container.style.margin = "0";
+		container.style.background = "white";
+		container.style.zIndex = "-1";
+		container.style.overflow = "hidden";
 
-		const exportNode = el.resumeDoc.cloneNode(true);
-		exportNode.id = "resume-preview";
-		exportNode.style.width = "794px";
-		exportNode.style.minHeight = "1123px";
-		exportNode.style.margin = "0";
-		exportNode.style.borderRadius = "0";
-		exportNode.style.boxShadow = "none";
-		exportNode.style.overflow = "hidden";
-		exportNode.style.background = "#ffffff";
-		exportNode.style.padding = "20px";
+		clone.id = "resume-preview-export";
+		clone.style.width = "794px";
+		clone.style.height = "auto";
+		clone.style.padding = "20px";
+		clone.style.margin = "0";
+		clone.style.background = "white";
+		clone.style.boxSizing = "border-box";
+		clone.style.borderRadius = "0";
+		clone.style.boxShadow = "none";
+		clone.style.overflow = "visible";
+		clone.style.display = "block";
 
-		const ensureOnePageFit = () => {
-			const targetHeight = 1123;
-			let scale = 1;
-			exportNode.style.fontSize = "14px";
-			exportNode.style.lineHeight = "1.4";
-			while (exportNode.scrollHeight > targetHeight && scale > 0.82) {
-				scale -= 0.02;
-				exportNode.style.fontSize = `${Math.round(14 * scale)}px`;
-				exportNode.style.lineHeight = String(1.25 + 0.15 * scale);
+		// 2. DISABLE all responsive CSS
+		// Disable all media queries by disable stylesheets
+		const styleTag = document.createElement("style");
+		styleTag.textContent = `
+			#resume-preview-export,
+			#resume-preview-export * {
+				width: auto !important;
+				max-width: none !important;
+				min-width: auto !important;
+				height: auto !important;
+				max-height: none !important;
+				min-height: auto !important;
+				padding: inherit !important;
+				margin: inherit !important;
+				border: inherit !important;
+				display: inherit !important;
+				grid-template-columns: inherit !important;
+				flex-wrap: inherit !important;
+				font-size: inherit !important;
+				line-height: inherit !important;
 			}
-		};
-
-		exportWrapper.appendChild(exportNode);
-		document.body.appendChild(exportWrapper);
-		ensureOnePageFit();
-
-		if (hasHtml2Pdf) {
-			try {
-				await window
-					.html2pdf()
-					.set({
-						filename,
-						margin: [0, 0, 0, 0],
-						image: { type: "jpeg", quality: 1 },
-						html2canvas: {
-							scale: 3,
-							useCORS: true,
-							backgroundColor: "#ffffff",
-							windowWidth: 1400,
-						},
-						jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-						pagebreak: { mode: ["avoid-all"] },
-					})
-					.from(exportNode)
-					.save();
-				showStatus("Downloaded as single-page A4 PDF");
-				return;
-			} catch (html2pdfErr) {
-				if (!(typeof html2canvasLib === "function" && hasJspdf)) {
-					throw html2pdfErr;
-				}
+			#resume-preview-export {
+				page-break-after: avoid !important;
+				page-break-before: avoid !important;
+				page-break-inside: avoid !important;
+				break-after: avoid !important;
+				break-before: avoid !important;
+				break-inside: avoid !important;
 			}
+		`;
+		container.appendChild(styleTag);
+		container.appendChild(clone);
+		document.body.appendChild(container);
+
+		// 3. FORCE A4 SIZE exactly (794px width, 1123px height)
+		// Scale content to fit if needed
+		let scale = 1;
+		const maxHeight = 1123;
+		const maxWidth = 794;
+
+		// Wait for content to render
+		await new Promise(resolve => setTimeout(resolve, 100));
+
+		// Auto-fit logic: reduce scale if content exceeds height
+		while (clone.scrollHeight > maxHeight && scale > 0.5) {
+			scale -= 0.05;
+			clone.style.transform = `scale(${scale})`;
+			clone.style.transformOrigin = "top left";
+			clone.style.width = `${maxWidth / scale}px`;
+			await new Promise(resolve => setTimeout(resolve, 50));
 		}
 
-		if (!(typeof html2canvasLib === "function" && hasJspdf)) {
-			throw new Error("PDF fallback libraries are not loaded");
-		}
-
-		const canvas = await html2canvasLib(exportNode, {
-			scale: 3,
+		// 4. USE html2canvas + jsPDF (NOT html2pdf)
+		const canvas = await window.html2canvas(clone, {
+			scale: 2,
 			useCORS: true,
-			backgroundColor: "#ffffff",
-			windowWidth: 1400,
+			backgroundColor: "white",
+			logging: false,
+			windowWidth: 794,
+			windowHeight: 1123,
+			ignoreElements: (element) => {
+				// Ignore elements that shouldn't be rendered
+				return element.tagName === "SCRIPT" || element.tagName === "STYLE";
+			}
 		});
 
-		const imageData = canvas.toDataURL("image/png", 1.0);
+		const imgData = canvas.toDataURL("image/png");
+
+		// Create PDF with exact A4 dimensions
 		const { jsPDF } = window.jspdf;
-		const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+		const pdf = new jsPDF({
+			orientation: "portrait",
+			unit: "mm",
+			format: "a4"
+		});
 
-		const pageWidth = 210;
-		const pageHeight = 297;
-		const margin = 6;
-		const targetWidth = pageWidth - margin * 2;
-		const targetHeight = pageHeight - margin * 2;
-		const scaleFactor = Math.min(targetWidth / canvas.width, targetHeight / canvas.height);
-		const renderWidth = canvas.width * scaleFactor;
-		const renderHeight = canvas.height * scaleFactor;
-		const offsetX = (pageWidth - renderWidth) / 2;
-		const offsetY = (pageHeight - renderHeight) / 2;
-
-		pdf.addImage(imageData, "PNG", offsetX, offsetY, renderWidth, renderHeight, undefined, "FAST");
+		// Add image to PDF (210mm x 297mm - A4 size)
+		pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
 		pdf.save(filename);
-		showStatus("Downloaded as single-page A4 PDF");
+
+		showStatus("✓ Downloaded as single-page A4 PDF");
+
 	} catch (err) {
-		showStatus(err.message || "Unable to download PDF", true);
+		console.error("PDF Download Error:", err);
+		showStatus(err.message || "Unable to download PDF. Check console for details.", true);
 	} finally {
-		const staleWrapper = document.querySelector("div[data-export-wrapper='resume']");
-		if (staleWrapper && document.body.contains(staleWrapper)) {
-			document.body.removeChild(staleWrapper);
+		// 5. CLEANUP - Remove export container
+		const exportContainer = document.querySelector("div[style*='left: -9999px']");
+		if (exportContainer && exportContainer.id !== "resume-preview-export") {
+			// Make sure we're removing the right one
+			const exports = Array.from(document.querySelectorAll("div[style*='left: -9999px']"));
+			exports.forEach(el => {
+				if (el.querySelector("#resume-preview-export")) {
+					el.parentElement.removeChild(el);
+				}
+			});
 		}
+		// Direct removal by finding the container
+		const allFixedDivs = document.querySelectorAll("div[style*='position: fixed']");
+		allFixedDivs.forEach(div => {
+			if (div.querySelector("#resume-preview-export")) {
+				document.body.removeChild(div);
+			}
+		});
 	}
 }
 
