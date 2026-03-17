@@ -1,0 +1,21 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' width='680' height='920' viewBox='0 0 680 920'>
+  <rect width='680' height='920' fill='#fff4ec'/>
+  <rect x='34' y='34' width='612' height='852' rx='16' fill='#ffffff' stroke='#ecdccf'/>
+  <rect x='34' y='34' width='612' height='180' rx='16' fill='#f3f3f3'/>
+  <path d='M-40,120 C120,20 230,190 370,102 C495,30 560,124 720,86 L720,34 L-40,34 Z' fill='#b85b1d'/>
+  <path d='M-60,140 C120,46 236,214 390,120 C520,42 588,138 740,98 L740,34 L-60,34 Z' fill='#f29b38' opacity='0.95'/>
+  <circle cx='532' cy='124' r='62' fill='#f29b38'/>
+  <circle cx='532' cy='124' r='52' fill='#ffffff' stroke='white' stroke-width='4'/>
+  <rect x='94' y='122' width='206' height='8' rx='4' fill='#5a6272'/>
+  <rect x='94' y='136' width='162' height='8' rx='4' fill='#5a6272'/>
+  <rect x='94' y='150' width='118' height='8' rx='4' fill='#5a6272'/>
+  <rect x='136' y='262' width='408' height='16' rx='8' fill='#1f2736'/>
+  <rect x='84' y='330' width='512' height='2' fill='#ecdccf'/>
+  <rect x='84' y='370' width='180' height='11' rx='5' fill='#1f2736'/>
+  <rect x='84' y='392' width='468' height='9' rx='4.5' fill='#5a6272' opacity='0.75'/>
+  <rect x='84' y='408' width='444' height='9' rx='4.5' fill='#5a6272' opacity='0.75'/>
+  <rect x='84' y='424' width='418' height='9' rx='4.5' fill='#5a6272' opacity='0.75'/>
+  <rect x='84' y='468' width='214' height='11' rx='5' fill='#1f2736'/>
+  <rect x='84' y='492' width='470' height='9' rx='4.5' fill='#5a6272' opacity='0.75'/>
+  <rect x='84' y='508' width='442' height='9' rx='4.5' fill='#5a6272' opacity='0.75'/>
+</svg>

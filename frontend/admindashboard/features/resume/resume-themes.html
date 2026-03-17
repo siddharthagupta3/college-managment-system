@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Resume Theme Gallery</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="resume-themes.css" />
+</head>
+<body>
+	<main class="themes-shell">
+		<header class="themes-topbar">
+			<div class="header-row">
+				<a class="back-link" href="resume.html">Back to Builder</a>
+				<div class="color-switch">
+					<label for="colorVariantSelect">Color Variant</label>
+					<select id="colorVariantSelect">
+						<option value="blue">Blue</option>
+						<option value="green">Green</option>
+						<option value="purple">Purple</option>
+						<option value="dark">Dark</option>
+						<option value="orange">Orange</option>
+					</select>
+				</div>
+			</div>
+			<h1>Choose Resume Design</h1>
+			<p>Pick any design. You will return to setup automatically.</p>
+			<nav class="filter-tabs" id="filterTabs">
+				<button type="button" class="filter-tab active" data-filter="all">All</button>
+				<button type="button" class="filter-tab" data-filter="modern">Modern</button>
+				<button type="button" class="filter-tab" data-filter="classic">Classic</button>
+				<button type="button" class="filter-tab" data-filter="creative">Creative</button>
+			</nav>
+		</header>
+
+		<section class="themes-layout">
+			<section class="theme-grid" id="themeGrid"></section>
+
+			<aside class="preview-panel">
+				<div class="preview-panel-head">
+					<h2>Live Template Preview</h2>
+					<p id="previewMeta">Choose a template to preview</p>
+				</div>
+				<div class="preview-frame">
+					<img id="mainPreviewImage" src="" alt="Selected template full preview" />
+				</div>
+				<div class="preview-actions">
+					<button type="button" id="fullscreenPreviewBtn" class="ghost-btn">Preview Full Screen</button>
+					<button type="button" id="selectTemplateBtn" class="primary-btn">Use This Template</button>
+				</div>
+			</aside>
+		</section>
+	</main>
+
+	<div class="fullscreen-modal" id="fullscreenModal" aria-hidden="true">
+		<button type="button" id="closeFullscreenBtn" class="close-modal">Close</button>
+		<img id="fullscreenImage" src="" alt="Full screen resume template preview" />
+	</div>
+
+	<script src="resume-themes.js"></script>
+</body>
+</html>

@@ -28,6 +28,9 @@ exports.updateMe = async (req, res) => {
       if (typeof profile.phone === "string") {
         req.user.phone = profile.phone;
       }
+      if (typeof profile.verifiedBadge === "boolean") {
+        req.user.verifiedBadge = profile.verifiedBadge;
+      }
     }
 
     await req.user.save();

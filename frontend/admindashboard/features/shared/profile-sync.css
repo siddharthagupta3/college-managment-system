@@ -1,0 +1,85 @@
+.cms-profile-wrap {
+  position: relative;
+  text-decoration: none;
+}
+
+.cms-profile-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(10px);
+  appearance: none;
+  cursor: pointer;
+  color: #fff;
+  max-width: 250px;
+}
+
+.cms-profile-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.cms-profile-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cms-profile-avatar-fallback {
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.cms-profile-meta {
+  min-width: 0;
+  display: grid;
+}
+
+.cms-profile-meta strong,
+.cms-profile-meta small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cms-profile-meta strong {
+  font-size: 0.86rem;
+  line-height: 1.1;
+}
+
+.cms-profile-meta small {
+  font-size: 0.73rem;
+  opacity: 0.88;
+}
+
+@media (max-width: 768px) {
+  .cms-profile-badge {
+    padding: 4px 8px;
+    max-width: 178px;
+    gap: 8px;
+  }
+
+  .cms-profile-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .cms-profile-meta strong {
+    font-size: 0.8rem;
+  }
+
+  .cms-profile-meta small {
+    font-size: 0.68rem;
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile | CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<body>
+  <main class="profile-shell">
+    <header class="profile-topbar">
+      <a href="../../admin.html" class="back-btn" aria-label="Back to dashboard">☰</a>
+      <h1>My Profile</h1>
+      <a href="../settings/settings.html" class="settings-btn">Settings</a>
+    </header>
+
+    <section class="profile-card" id="profileCard">
+      <div class="profile-hero">
+        <div class="avatar" id="avatar">U</div>
+        <div>
+          <p class="eyebrow">Connected With Settings</p>
+          <h2 id="fullName">User</h2>
+          <p id="roleText">Role not set</p>
+        </div>
+      </div>
+
+      <div class="details-grid">
+        <article class="detail-panel">
+          <h3>Account</h3>
+          <p><strong>Email:</strong> <span id="emailText">Not available</span></p>
+          <p><strong>Role:</strong> <span id="roleText2">Not set</span></p>
+        </article>
+        <article class="detail-panel">
+          <h3>Bio</h3>
+          <p id="bioText">No bio added yet.</p>
+        </article>
+      </div>
+
+      <div class="action-row">
+        <a class="primary-btn" href="../settings/settings.html">Edit in Settings</a>
+        <a class="secondary-btn" href="../../admin.html">Back to Dashboard</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="profile.js"></script>
+</body>
+</html>

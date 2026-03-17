@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-labelledby="title desc">
+  <title id="title">Mind Game</title>
+  <desc id="desc">Brain and puzzle game concept illustration.</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="50%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="brain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fda4af"/>
+      <stop offset="50%" stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </linearGradient>
+    <linearGradient id="puzzle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="520" fill="url(#bg2)" rx="28"/>
+  <circle cx="90" cy="90" r="58" fill="#22d3ee" opacity="0.18"/>
+  <circle cx="702" cy="436" r="78" fill="#a78bfa" opacity="0.16"/>
+
+  <g transform="translate(70 60)">
+    <rect x="0" y="0" width="410" height="360" rx="26" fill="#111827" stroke="#334155" stroke-width="2"/>
+
+    <path d="M140 80c-38 0-68 31-68 69 0 29 17 54 41 64v34c0 13 10 23 23 23h70c13 0 23-10 23-23v-34c24-10 41-35 41-64 0-38-30-69-68-69-12 0-24 4-34 10-10-6-22-10-34-10z"
+          fill="url(#brain)"/>
+
+    <path d="M158 122c-10 0-18 8-18 18m62-18c10 0 18 8 18 18m-55 36c7 9 17 14 29 14 11 0 22-5 29-14"
+          fill="none" stroke="#1f2937" stroke-width="6" stroke-linecap="round"/>
+
+    <rect x="74" y="286" width="72" height="72" rx="12" fill="url(#puzzle)"/>
+    <rect x="162" y="286" width="72" height="72" rx="12" fill="#38bdf8"/>
+    <rect x="250" y="286" width="72" height="72" rx="12" fill="#a78bfa"/>
+
+    <path d="M110 286v-16c0-8 6-14 14-14h8" stroke="#0f172a" stroke-width="6" fill="none"/>
+    <path d="M198 286v-16c0-8 6-14 14-14h8" stroke="#0f172a" stroke-width="6" fill="none"/>
+    <path d="M286 286v-16c0-8 6-14 14-14h8" stroke="#0f172a" stroke-width="6" fill="none"/>
+  </g>
+
+  <g transform="translate(530 110)">
+    <rect x="0" y="0" width="210" height="70" rx="16" fill="#1e293b"/>
+    <text x="20" y="44" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="600">Level 08</text>
+
+    <rect x="0" y="92" width="210" height="70" rx="16" fill="#1e293b"/>
+    <text x="20" y="136" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="600">Score 1240</text>
+
+    <rect x="0" y="184" width="210" height="120" rx="18" fill="url(#puzzle)"/>
+    <text x="28" y="256" fill="#052e2b" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Play Now</text>
+  </g>
+
+  <text x="72" y="474" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Mind Game</text>
+</svg>

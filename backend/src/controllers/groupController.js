@@ -46,8 +46,8 @@ exports.getGroup = async (req, res) => {
   if (!check.ok) return res.status(check.status).json({ message: check.message });
 
   const group = await Group.findById(req.params.groupId)
-    .populate("createdBy", "name role")
-    .populate("members", "name role profile.avatarUrl");
+    .populate("createdBy", "name username profile.avatarUrl verifiedBadge")
+    .populate("members", "name username profile.avatarUrl verifiedBadge");
 
   return res.json({ group });
 };
@@ -85,10 +85,6 @@ exports.removeMember = async (req, res) => {
 
     const target = await User.findById(userId);
     if (!target) return res.status(404).json({ message: "Target user not found" });
-
-    if (target.role === "admin" && req.user.role === "faculty") {
-      return res.status(403).json({ message: "Faculty cannot remove admin" });
-    }
 
     await Group.updateOne({ _id: req.params.groupId }, { $pull: { members: target._id } });
 

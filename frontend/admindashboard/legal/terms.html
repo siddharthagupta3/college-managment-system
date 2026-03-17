@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Terms & Conditions</title>
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(-45deg,#ff6a00,#ee0979,#00c6ff,#0072ff);
+background-size:400% 400%;
+animation:bg 8s ease infinite;
+color:white;
+}
+
+@keyframes bg{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.card{
+background:rgba(0,0,0,.7);
+padding:50px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+max-width:700px;
+animation:slide 1.5s ease;
+}
+
+@keyframes slide{
+from{transform:translateY(50px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+h1{margin-bottom:20px;}
+p{line-height:1.6;color:#ddd;}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Terms & Conditions</h1>
+<p>Users must follow platform rules strictly.</p>
+<p>Any misuse may result in account suspension.</p>
+<p>Admin decisions are final within system authority.</p>
+</div>
+</body>
+</html>

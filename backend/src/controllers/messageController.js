@@ -28,7 +28,7 @@ exports.listGroupMessages = async (req, res) => {
     const messages = await Message.find(filter)
       .sort({ createdAt: -1 })
       .limit(limit)
-      .populate("sender", "name role profile.avatarUrl");
+      .populate("sender", "name username profile.avatarUrl verifiedBadge");
 
     return res.json({ messages: messages.reverse() });
   } catch (err) {
@@ -53,9 +53,21 @@ exports.sendGroupMessage = async (req, res) => {
       reactions: [],
     });
 
-    await Group.updateOne({ _id: groupId }, { $set: { lastMessageAt: new Date() } });
+    await Group.updateOne(
+      { _id: groupId },
+      {
+        $set: {
+          lastMessageAt: message.createdAt,
+          lastMessageText: message.text,
+          lastMessageSender: req.user._id,
+        },
+      }
+    );
 
-    const populated = await Message.findById(message._id).populate("sender", "name role profile.avatarUrl");
+    const populated = await Message.findById(message._id).populate(
+      "sender",
+      "name username profile.avatarUrl verifiedBadge"
+    );
 
     // Notifications for all members except sender
     const memberIds = check.group.members.map((m) => m.toString()).filter((id) => id !== req.user._id.toString());
@@ -109,7 +121,10 @@ exports.reactToMessage = async (req, res) => {
 
     await message.save();
 
-    const populated = await Message.findById(message._id).populate("sender", "name role profile.avatarUrl");
+    const populated = await Message.findById(message._id).populate(
+      "sender",
+      "name username profile.avatarUrl verifiedBadge"
+    );
 
     const io = getIO();
     if (io) io.to(`group:${message.group.toString()}`).emit("message:updated", populated);

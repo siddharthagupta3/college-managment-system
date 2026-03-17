@@ -1,13 +1,14 @@
 const express = require("express");
-const { requireAuth, requireRoles } = require("../middleware/auth");
+const { requireAuth } = require("../middleware/auth");
 const messageController = require("../controllers/messageController");
 
 const router = express.Router();
 
+// Any authenticated user can read, send and react to messages
 router.get("/group/:groupId", requireAuth, messageController.listGroupMessages);
-router.post("/group/:groupId", requireAuth, requireRoles("admin", "faculty"), messageController.sendGroupMessage);
+router.post("/group/:groupId", requireAuth, messageController.sendGroupMessage);
 
-router.post("/:messageId/react", requireAuth, requireRoles("student"), messageController.reactToMessage);
+router.post("/:messageId/react", requireAuth, messageController.reactToMessage);
 
 module.exports = router;
 

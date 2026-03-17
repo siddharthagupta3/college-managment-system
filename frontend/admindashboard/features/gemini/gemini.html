@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="http://localhost:5000/api">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini AI | CMS Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="gemini.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top-fixed">
+        <button class="new-chat-btn" id="newChatBtn" type="button">+ New Chat</button>
+      </div>
+
+      <div class="sidebar-scroll-area">
+        <div class="sidebar-section-title">Recent Chats</div>
+        <ul class="chat-list" id="chatList"></ul>
+      </div>
+
+      <div class="sidebar-bottom-fixed">
+        <a class="sidebar-back-home" href="../../admin.html">Back to Home</a>
+      </div>
+    </aside>
+
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close sidebar"></button>
+
+    <section class="chat-panel">
+    <header class="topbar">
+      <button class="menu-btn" id="sidebarToggle" type="button" aria-label="Toggle sidebar">☰</button>
+      <h1>Gemini</h1>
+      <button class="delete-chat-btn" id="deleteChatBtn" type="button" aria-label="Delete chat history">🗑</button>
+      <a class="profile-wrap" href="../profile/profile.html" aria-label="Open profile">
+        <img id="profileImage" class="profile-image hidden" alt="Profile" />
+        <div id="profileFallback" class="profile-dot" aria-hidden="true">U</div>
+      </a>
+    </header>
+
+    <section class="hero-text">
+      <h2 id="greetingText">
+        <span id="greetingPrefix">Hi Siddhartha,</span>
+        <span class="greet-dynamic" id="greetingDynamic">Explore</span>
+      </h2>
+      <div class="quick-actions">
+        <button class="chip" data-prompt="Create Image">Create Image</button>
+        <button class="chip" data-prompt="Create Music">Create Music</button>
+        <button class="chip" data-prompt="Explore Cricket">Explore Cricket</button>
+        <button class="chip" data-prompt="Help Me Learn">Help Me Learn</button>
+      </div>
+    </section>
+
+    <section id="chatArea" class="chat-area" aria-live="polite"></section>
+
+    <form id="chatForm" class="chat-input-wrap">
+      <button type="button" class="icon-btn" id="attachBtn" aria-label="Attach file">+</button>
+      <input id="chatInput" type="text" placeholder="Ask Gemini" autocomplete="off" />
+      <button type="button" class="icon-btn" id="micBtn" aria-label="Voice input">🎤</button>
+      <button type="submit" class="send-btn" aria-label="Send message">➤</button>
+    </form>
+    </section>
+  </main>
+
+  <script src="../shared/profile-sync.js"></script>
+  <script src="gemini.js"></script>
+</body>
+</html>

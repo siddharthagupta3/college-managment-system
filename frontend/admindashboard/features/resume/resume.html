@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Premium Resume Builder</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="resume.css" />
+</head>
+<body>
+	<main class="builder-shell">
+		<header class="builder-topbar">
+			<div class="topbar-left-actions">
+				<a class="back-home" href="../../admin.html">Back to Home</a>
+				<a class="theme-catalog-link" href="resume-themes.html">Resume Themes</a>
+			</div>
+			<h1>Premium Resume Builder</h1>
+			<div class="ats-chip">ATS Score: <strong id="atsScore">0</strong></div>
+		</header>
+
+		<section class="workspace">
+			<aside class="controls-card">
+				<div class="sticky-controls">
+					<nav class="step-tabs" id="stepTabs">
+						<button type="button" data-step="1" class="step-tab active">1. Personal</button>
+						<button type="button" data-step="2" class="step-tab">2. About</button>
+						<button type="button" data-step="3" class="step-tab">3. Education</button>
+						<button type="button" data-step="4" class="step-tab">4. Experience</button>
+						<button type="button" data-step="5" class="step-tab">5. Skills</button>
+					</nav>
+
+					<section class="panel step-panel active" data-step-panel="1">
+						<h2>Personal Info</h2>
+						<div class="grid two">
+							<label>Full Name<input id="name" type="text" /></label>
+							<label>Profession<input id="profession" type="text" /></label>
+							<label>Phone<input id="phone" type="text" /></label>
+							<label>Email<input id="email" type="email" /></label>
+							<label class="span-2">Address<input id="address" type="text" /></label>
+							<label>LinkedIn<input id="linkedIn" type="url" /></label>
+							<label>GitHub<input id="github" type="url" /></label>
+							<label class="span-2">Portfolio<input id="portfolio" type="url" /></label>
+							<label class="span-2">Profile Image<input id="profileImage" type="file" accept="image/*" /></label>
+						</div>
+					</section>
+
+					<section class="panel step-panel" data-step-panel="2">
+						<h2>About Me</h2>
+						<label>Summary<textarea id="about" rows="8" placeholder="Write a concise ATS-friendly summary"></textarea></label>
+					</section>
+
+					<section class="panel step-panel" data-step-panel="3">
+						<h2>Education</h2>
+						<div id="educationList" class="item-list"></div>
+						<button type="button" class="secondary" id="addEducationBtn">+ Add Education</button>
+					</section>
+
+					<section class="panel step-panel" data-step-panel="4">
+						<h2>Work Experience</h2>
+						<div id="experienceList" class="item-list"></div>
+						<button type="button" class="secondary" id="addExperienceBtn">+ Add Experience</button>
+					</section>
+
+					<section class="panel step-panel" data-step-panel="5">
+						<h2>Skills</h2>
+						<div class="skills-input-row">
+							<input id="skillInput" type="text" placeholder="Type skill and press Add" />
+							<button type="button" class="secondary" id="addSkillBtn">Add</button>
+						</div>
+						<div id="skillTags" class="tags"></div>
+
+						<h3>Languages</h3>
+						<div class="skills-input-row">
+							<input id="languageInput" type="text" placeholder="Type language and press Add" />
+							<button type="button" class="secondary" id="addLanguageBtn">Add</button>
+						</div>
+						<div id="languageTags" class="tags"></div>
+
+						<h3>Interests</h3>
+						<div class="skills-input-row">
+							<input id="interestInput" type="text" placeholder="Type interest and press Add" />
+							<button type="button" class="secondary" id="addInterestBtn">Add</button>
+						</div>
+						<div id="interestTags" class="tags"></div>
+
+						<h3>Strengths</h3>
+						<div class="skills-input-row">
+							<input id="strengthInput" type="text" placeholder="Type strength and press Add" />
+							<button type="button" class="secondary" id="addStrengthBtn">Add</button>
+						</div>
+						<div id="strengthTags" class="tags"></div>
+
+						<h3>Achievements</h3>
+						<div class="skills-input-row">
+							<input id="achievementInput" type="text" placeholder="Type achievement and press Add" />
+							<button type="button" class="secondary" id="addAchievementBtn">Add</button>
+						</div>
+						<div id="achievementTags" class="tags"></div>
+
+						<h3>Portfolio Items</h3>
+						<div id="portfolioList" class="item-list"></div>
+						<button type="button" class="secondary" id="addPortfolioBtn">+ Add Portfolio Item</button>
+
+						<h3>Template</h3>
+						<select id="templateSelect">
+							<option value="professional-wave">Professional Wave</option>
+							<option value="executive-sidebar">Executive Sidebar (Dark Left)</option>
+							<option value="teal-split">Teal Split (Business)</option>
+							<option value="student-mint">Student Mint (Resume.io style)</option>
+							<option value="editorial-rose">Editorial Rose (BeamJobs style)</option>
+							<option value="mono-accountant">Mono Accountant (Clean white)</option>
+							<option value="medical-column">Medical Column (Nurse style)</option>
+							<option value="crimson-education">Crimson Education (Student)</option>
+							<option value="brown-minimalist">Brown Minimalist (Student)</option>
+							<option value="purple-creator">Purple Creator (Content)</option>
+							<option value="teal-interior-pro">Teal Interior Pro (VisualCV)</option>
+							<option value="green-impact-pro">Green Impact Pro (QwikResume)</option>
+						</select>
+
+						<h3>Template Custom Settings</h3>
+						<div id="templateCustomSettings" class="template-custom-settings"></div>
+
+						<h3>Theme + Font</h3>
+						<div class="grid two">
+							<select id="themeSelect">
+								<option value="light">Light</option>
+								<option value="dark">Dark</option>
+							</select>
+							<select id="fontSelect">
+								<option value="Manrope">Manrope</option>
+								<option value="Montserrat">Montserrat</option>
+								<option value="Playfair Display">Playfair Display</option>
+							</select>
+						</div>
+
+						<h3>Template Background Design</h3>
+						<select id="backgroundSelect">
+							<option value="clean-paper">Clean Paper</option>
+							<option value="soft-grid">Soft Grid</option>
+							<option value="angled-lines">Angled Lines</option>
+							<option value="dot-matrix">Dot Matrix</option>
+							<option value="mesh-wave">Mesh Wave</option>
+							<option value="sidebar-bands">Sidebar Bands</option>
+							<option value="neon-frame">Neon Frame</option>
+							<option value="warm-paper">Warm Paper</option>
+							<option value="blueprint">Blueprint</option>
+							<option value="minimal-fade">Minimal Fade</option>
+						</select>
+
+						<h3>Builder UI Style</h3>
+						<select id="uiStyleSelect">
+							<option value="glass">Glass Premium</option>
+							<option value="midnight">Midnight Studio</option>
+							<option value="paper">Paper Minimal</option>
+						</select>
+
+						<h3>Section Order</h3>
+						<ul id="sectionOrderList" class="order-list">
+							<li data-section="about">About Me</li>
+							<li data-section="education">Education</li>
+							<li data-section="experience">Work Experience</li>
+							<li data-section="skills">Skills</li>
+							<li data-section="languages">Languages</li>
+							<li data-section="achievements">Achievements</li>
+							<li data-section="interests">Interests</li>
+							<li data-section="strengths">Strengths</li>
+							<li data-section="portfolio">Portfolio</li>
+						</ul>
+					</section>
+
+					<div class="actions-row">
+						<button type="button" id="prevStepBtn" class="secondary">Previous</button>
+						<button type="button" id="nextStepBtn" class="primary">Next</button>
+					</div>
+
+					<div class="actions-row final">
+						<button type="button" id="saveResumeBtn" class="primary">Save Resume</button>
+						<button type="button" id="downloadPdfBtn" class="secondary">Download Resume</button>
+					</div>
+
+					<div class="actions-row final">
+						<input id="resumeIdInput" type="text" placeholder="Paste Resume ID" />
+						<button type="button" id="loadResumeBtn" class="secondary">Load</button>
+					</div>
+
+					<p id="statusText" class="status"></p>
+				</div>
+			</aside>
+
+			<section class="preview-card">
+				<div class="preview-head">
+					<h2>Live Preview</h2>
+					<span>Template updates instantly</span>
+				</div>
+				<div id="resumePreview" class="preview-wrap">
+					<article id="resume-preview" class="resume-doc template-professional-wave theme-light font-manrope"></article>
+				</div>
+			</section>
+		</section>
+	</main>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+	<script src="../../../config.js"></script>
+	<script src="resume.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' width='900' height='640' viewBox='0 0 900 640'>
+<rect width='900' height='640' fill='#1a2438'/>
+<rect x='40' y='40' width='230' height='560' rx='18' fill='#6fc2ff'/>
+<circle cx='155' cy='120' r='52' fill='#ffffff' opacity='0.9'/>
+<rect x='88' y='206' width='130' height='9' rx='4' fill='#ffffff' opacity='0.8'/>
+<rect x='88' y='228' width='158' height='8' rx='4' fill='#ffffff' opacity='0.6'/>
+<rect x='88' y='286' width='150' height='10' rx='5' fill='#ffffff' opacity='0.85'/>
+<rect x='88' y='310' width='150' height='6' rx='3' fill='#f0d086'/>
+<rect x='88' y='336' width='160' height='6' rx='3' fill='#f0d086'/>
+<rect x='88' y='362' width='145' height='6' rx='3' fill='#f0d086'/>
+<rect x='300' y='72' width='560' height='36' rx='9' fill='#6fc2ff' opacity='0.15'/>
+<rect x='300' y='130' width='560' height='188' rx='12' fill='#ffffff'/>
+<rect x='320' y='154' width='300' height='14' rx='7' fill='#6fc2ff'/>
+<rect x='320' y='180' width='500' height='8' rx='4' fill='#3c5a86'/>
+<rect x='320' y='200' width='470' height='8' rx='4' fill='#3c5a86'/>
+<rect x='300' y='338' width='560' height='136' rx='12' fill='#ffffff'/>
+<rect x='320' y='362' width='250' height='14' rx='7' fill='#6fc2ff'/>
+<rect x='320' y='390' width='500' height='8' rx='4' fill='#3c5a86'/>
+<rect x='320' y='410' width='450' height='8' rx='4' fill='#3c5a86'/>
+<rect x='320' y='500' width='160' height='66' rx='6' fill='none' stroke='#6fc2ff' stroke-width='3'/>
+<rect x='500' y='500' width='160' height='66' rx='6' fill='none' stroke='#6fc2ff' stroke-width='3'/>
+<rect x='680' y='500' width='160' height='66' rx='6' fill='none' stroke='#6fc2ff' stroke-width='3'/>
+<text x='300' y='612' font-family='Arial' font-size='26' fill='#6fc2ff'>Teal Interior Pro</text>
+</svg>

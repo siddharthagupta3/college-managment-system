@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../shared/profile-sync.css" />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <main class="settings-shell">
+    <header class="settings-topbar">
+      <a class="back-btn" href="../../admin.html" aria-label="Back to Dashboard">☰</a>
+      <h1>Professional Settings</h1>
+      <div class="settings-topbar-right">
+        <span class="mode-pill" id="modePill">Local Mode</span>
+        <div data-cms-profile-badge data-settings-link="settings.html" data-profile-link="../profile/profile.html"></div>
+      </div>
+    </header>
+
+    <section class="hero-card">
+      <div>
+        <p class="eyebrow">User Workspace</p>
+        <h2>Profile and Account Controls</h2>
+        <p>Manage your profile, communication preferences, and account security from one place.</p>
+      </div>
+      <button type="button" id="saveAllBtn" class="primary-btn">Save Changes</button>
+    </section>
+
+    <section class="settings-grid">
+      <article class="panel profile-panel">
+        <h3>Profile</h3>
+        <div class="avatar-row">
+          <div class="avatar" id="avatarPreview">U</div>
+          <label class="upload-btn" for="avatarInput">Upload Photo</label>
+          <input id="avatarInput" type="file" accept="image/*" />
+        </div>
+
+        <form id="profileForm" class="form-grid" autocomplete="off">
+          <label>
+            Full Name
+            <input type="text" id="fullName" placeholder="Your full name" />
+          </label>
+          <label>
+            Email
+            <input type="email" id="email" placeholder="you@college.edu" />
+          </label>
+          <label>
+            Role
+            <input type="text" id="role" placeholder="Student / Admin" />
+          </label>
+          <label class="wide">
+            Bio
+            <textarea id="bio" rows="4" placeholder="A short professional introduction"></textarea>
+          </label>
+        </form>
+      </article>
+
+      <article class="panel">
+        <h3>Preferences</h3>
+        <div class="toggle-list">
+          <label class="toggle-item">
+            <span>Email notifications</span>
+            <input type="checkbox" id="prefEmail" />
+          </label>
+          <label class="toggle-item">
+            <span>Desktop reminders</span>
+            <input type="checkbox" id="prefReminders" />
+          </label>
+          <label class="toggle-item">
+            <span>Weekly report summary</span>
+            <input type="checkbox" id="prefWeekly" />
+          </label>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h3>Security</h3>
+        <div class="security-list">
+          <div class="security-item">
+            <strong>Password</strong>
+            <p>Last changed: Not set</p>
+          </div>
+          <div class="security-item">
+            <strong>Two-Factor Authentication</strong>
+            <p>Status: Ready to configure</p>
+          </div>
+          <button type="button" class="secondary-btn" id="securityBtn">Review Security</button>
+        </div>
+      </article>
+
+      <article class="panel full">
+        <h3>Backend Ready Configuration</h3>
+        <p class="muted">This page currently uses local storage only. When you want full backend integration for all settings, flip one flag in settings.js.</p>
+        <pre class="code-block">const SETTINGS_DATA_PROVIDER = {
+  enabled: false,
+  baseUrl: "",
+  endpoints: {
+    profile: "/api/settings/profile",
+    preferences: "/api/settings/preferences"
+  }
+};</pre>
+      </article>
+    </section>
+
+    <p class="status" id="statusText" aria-live="polite"></p>
+  </main>
+
+  <script src="../shared/profile-sync.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

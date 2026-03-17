@@ -1,0 +1,11 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' width='680' height='920' viewBox='0 0 680 920'>
+<rect width='680' height='920' fill='#edf6f1'/>
+<rect x='34' y='34' width='612' height='852' rx='14' fill='#ffffff' stroke='#d9e9df'/>
+<rect x='34' y='170' width='612' height='40' fill='#2f9e44'/>
+<circle cx='146' cy='128' r='64' fill='#dde7f0'/><circle cx='146' cy='128' r='57' fill='#c4d7e7'/>
+<rect x='276' y='96' width='188' height='16' rx='8' fill='#1b2a23'/><rect x='276' y='120' width='150' height='10' rx='5' fill='#607669'/>
+<rect x='34' y='210' width='250' height='676' fill='#ecf2f5'/>
+<rect x='64' y='246' width='130' height='10' rx='5' fill='#1b2a23'/><rect x='64' y='270' width='170' height='8' rx='4' fill='#607669'/><rect x='64' y='286' width='152' height='8' rx='4' fill='#607669'/>
+<rect x='314' y='246' width='230' height='10' rx='5' fill='#1b2a23'/><rect x='314' y='270' width='282' height='8' rx='4' fill='#607669'/><rect x='314' y='286' width='264' height='8' rx='4' fill='#607669'/>
+<rect x='314' y='332' width='180' height='10' rx='5' fill='#1b2a23'/><rect x='314' y='354' width='274' height='8' rx='4' fill='#607669'/><rect x='314' y='370' width='252' height='8' rx='4' fill='#607669'/>
+</svg>

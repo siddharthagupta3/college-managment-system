@@ -1,0 +1,18 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' width='900' height='640' viewBox='0 0 900 640'>
+<rect width='900' height='640' fill='#eef4ff'/>
+<rect x='40' y='40' width='220' height='560' rx='18' fill='#2f6fdb'/>
+<circle cx='150' cy='120' r='54' fill='#ffffff' opacity='0.9'/>
+<rect x='88' y='200' width='124' height='10' rx='5' fill='#ffffff' opacity='0.85'/>
+<rect x='88' y='220' width='150' height='8' rx='4' fill='#ffffff' opacity='0.65'/>
+<rect x='88' y='246' width='140' height='8' rx='4' fill='#ffffff' opacity='0.65'/>
+<rect x='300' y='72' width='560' height='40' rx='10' fill='#2f6fdb' opacity='0.2'/>
+<rect x='300' y='140' width='560' height='146' rx='14' fill='#ffffff'/>
+<rect x='320' y='164' width='280' height='14' rx='7' fill='#2f6fdb'/>
+<rect x='320' y='190' width='500' height='9' rx='4' fill='#9bb5e6'/>
+<rect x='320' y='210' width='470' height='9' rx='4' fill='#9bb5e6'/>
+<rect x='300' y='308' width='560' height='126' rx='14' fill='#ffffff'/>
+<rect x='320' y='332' width='300' height='14' rx='7' fill='#2f6fdb'/>
+<rect x='320' y='358' width='500' height='9' rx='4' fill='#9bb5e6'/>
+<rect x='320' y='378' width='430' height='9' rx='4' fill='#9bb5e6'/>
+<text x='300' y='560' font-family='Arial' font-size='28' fill='#2f6fdb'>Crimson Education</text>
+</svg>

@@ -1,47 +1,70 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, trim: true, required: true },
-    username: { type: String, trim: true, lowercase: true, unique: true, required: true, index: true },
-    email: { type: String, trim: true, lowercase: true, unique: true, required: true, index: true },
-    phone: { type: String, trim: true, required: true },
-    passwordHash: { type: String, required: true, select: false },
-    role: {
-      type: String,
-      enum: ["admin", "faculty", "student"],
-      required: true,
-      index: true,
-    },
-    emailVerified: { type: Boolean, default: false, index: true },
-    verificationToken: { type: String, default: null, index: true },
-    verificationTokenExpiresAt: { type: Date, default: null },
-    resetPasswordToken: { type: String, default: null, index: true },
-    resetPasswordExpiresAt: { type: Date, default: null },
-    profile: {
-      avatarUrl: { type: String, default: "" },
-      bio: { type: String, default: "" },
-      department: { type: String, default: "" },
-      year: { type: String, default: "" },
-    },
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
   },
-  { timestamps: true }
-);
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6
+  },
+  role: {
+    type: String,
+    enum: ["admin", "faculty", "student"],
+    default: "student"
+  },
+  profileImage: {
+    type: String,
+    default: ""
+  },
+  bio: {
+    type: String,
+    default: "",
+    maxlength: 500
+  },
+  isOnline: {
+    type: Boolean,
+    default: false
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now
+  }
+}, { timestamps: true });
 
-userSchema.methods.toSafeJSON = function toSafeJSON() {
-  return {
-    id: this._id.toString(),
-    name: this.name,
-    username: this.username,
-    email: this.email,
-    phone: this.phone,
-    role: this.role,
-    profile: this.profile,
-    emailVerified: this.emailVerified,
-    createdAt: this.createdAt,
-    updatedAt: this.updatedAt,
-  };
+// Hash password before saving
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  
+  try {
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Compare password method
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+// Get user initials for avatar
+userSchema.virtual('initials').get(function() {
+  if (!this.name) return 'U';
+  return this.name.split(' ').map(word => word[0]).join('').toUpperCase().slice(0, 2);
+});
 
+module.exports = mongoose.model("User", userSchema);

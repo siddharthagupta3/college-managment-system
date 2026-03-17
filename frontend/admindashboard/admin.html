@@ -1,183 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>CMS Admin Dashboard</title>
-<link rel="stylesheet" href="./admin.css">
-<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://github.com" crossorigin>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<title>CMS Dashboard</title>
+
+<!-- CSS CONNECT -->
+<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="features/shared/profile-sync.css">
+
 </head>
 
 <body>
 
-<input type="checkbox" id="menu-toggle">
+<!-- TOP BAR -->
+<header class="topbar">
 
-<div class="sidebar">
-    <div class="side-header">
-        <h3>C<span>MS</span></h3>
-    </div>
+<!-- DESKTOP NAVBAR -->
+<nav class="desktop-nav">
 
-    <div class="side-content">
-        <div class="profile">
-            <div id="adminAvatar" class="profile-img bg-img"></div>
-            <h4 id="adminName">Admin</h4>
-            <small id="adminRole">Admin • CMS</small>
-        </div>
+<a href="features/resume/resume.html">Resume Builder</a>
+<a href="features/gemini/gemini.html">Gemini AI</a>
+<a href="mindgame.html">Mind Game</a>
+<a href="features/settings/settings.html">Settings</a>
 
-        <div class="side-menu">
-            <ul>
-                <li>
-                    <a href="" class="active">
-                        <span class="las la-home"></span>
-                        <small>Dashboard</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="../admindashboard/profile.html">
-                        <span class="las la-user-graduate"></span>
-                        <small>Profile</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="../admindashboard/ai-chat.html">
-                        <span class="las la-chalkboard-teacher"></span>
-                        <small>AI Assistant</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="../admindashboard/mind-games.html">
-                        <span class="las la-puzzle-piece"></span>
-                        <small>Mind Games</small>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+</nav>
+
+<!-- HAMBURGER MENU -->
+<div class="hamburger" onclick="toggleMenu()">
+
+<span></span>
+<span></span>
+<span></span>
+
 </div>
 
+<div class="topbar-profile-slot" data-cms-profile-badge data-settings-link="features/settings/settings.html" data-profile-link="features/profile/profile.html"></div>
 
-<div class="main-content">
+<!-- MOBILE MENU -->
+<nav class="menu" id="menu">
 
-<header>
-<div class="header-content">
-    <label for="menu-toggle">
-        <span class="las la-bars"></span>
-    </label>
+<a href="features/resume/resume.html">Resume Builder</a>
+<a href="features/gemini/gemini.html">Gemini AI</a>
+<a href="mindgame.html">Mind Game</a>
+<a href="features/settings/settings.html">Settings</a>
 
-    <div class="header-menu">
-        <div class="notify-icon">
-            <span class="las la-bell"></span>
-            <span class="notify">5</span>
-        </div>
+</nav>
 
-        <div class="user">
-            <div class="bg-img" style="background-image: url('image/sid.jpg');"></div>
-            <span class="las la-power-off"></span>
-            <span>Logout</span>
-        </div>
-    </div>
-</div>
 </header>
 
 
-<main>
+<section class="home">
+<div class="description">
 
-<div class="page-header">
-    <h1>College Dashboard</h1>
-    <small>Home / CMS Dashboard</small>
+<!-- ROCKET BADGE -->
+<div class="badge">
+🚀 management Tomorrow, Today
 </div>
 
-<div class="page-content">
+<h1 class="title">
+<span class="gradient-text">Grow Professionally</span> with the Best
+</h1>
 
-<div class="analytics">
+<p class="paragraph">
+In a world filled with opportunities, having a mentor can make all the difference.
+Explore why people turn to this invaluable resource to unlock their potential.
+</p>
 
-<div class="card">
-    <div class="card-head">
-        <h2>1,240</h2>
-        <span class="las la-user-graduate"></span>
-    </div>
-    <div class="card-progress">
-        <small>Total Students</small>
-        <div class="card-indicator">
-            <div class="indicator one" style="width: 80%"></div>
-        </div>
-    </div>
-</div>
+<form id="form" autocomplete="off">
 
-<div class="card">
-    <div class="card-head">
-        <h2>85</h2>
-        <span class="las la-chalkboard-teacher"></span>
-    </div>
-    <div class="card-progress">
-        <small>Total Faculty</small>
-        <div class="card-indicator">
-            <div class="indicator two" style="width: 70%"></div>
-        </div>
-    </div>
-</div>
+<input
+type="email"
+id="email-id"
+name="email_address"
+aria-label="email adress"
+placeholder=""
+required
+oninput="checkEmpty()" />
 
-<div class="card">
-    <div class="card-head">
-        <h2>32</h2>
-        <span class="las la-book"></span>
-    </div>
-    <div class="card-progress">
-        <small>Total Courses</small>
-        <div class="card-indicator">
-            <div class="indicator three" style="width: 60%"></div>
-        </div>
-    </div>
-</div>
+<button type="submit" class="btn" aria-label="submit">
+<span>Subscribe</span>
+<ion-icon name="arrow-forward-outline"></ion-icon>
+</button>
 
-<div class="card">
-    <div class="card-head">
-        <h2>12</h2>
-        <span class="las la-building"></span>
-    </div>
-    <div class="card-progress">
-        <small>Departments</small>
-        <div class="card-indicator">
-            <div class="indicator four" style="width: 90%"></div>
-        </div>
-    </div>
-</div>
+</form>
 
 </div>
 
-<!-- Realtime Groups & Chat Section -->
-<section class="admin-chat">
-    <div class="groups-panel">
-        <div class="panel-header">
-            <h2>Groups</h2>
-            <button id="createGroupBtn" class="btn-primary small">+ New Group</button>
-        </div>
-        <ul id="groupsList" class="groups-list">
-            <!-- Filled by admin.js -->
-        </ul>
-    </div>
+<div class="users-color-container">
 
-    <div class="chat-panel">
-        <div class="panel-header">
-            <h2 id="chatGroupTitle">Select a group</h2>
-            <span id="chatRoleBadge" class="role-badge">Admin</span>
-        </div>
-        <div id="messagesList" class="messages-list">
-            <!-- Filled by admin.js -->
-        </div>
-        <form id="messageForm" class="message-form">
-            <input id="messageInput" type="text" placeholder="Type a message..." autocomplete="off">
-            <button type="submit" class="btn-primary small">Send</button>
-        </form>
-    </div>
+<span class="item" style="--i: 1"></span>
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/274f29ce-0d3f-4ac2-a2aa-f9b7bd188b2a"
+style="--i: 2"
+loading="eager"
+fetchpriority="high"
+decoding="async"
+alt="" />
+
+<span class="item" style="--i: 3"></span>
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/b8a14493-3d9f-4b9b-b93a-56d0bc7243e9"
+style="--i: 4"
+loading="eager"
+fetchpriority="high"
+decoding="async"
+alt="" />
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/03e51e1e-9750-45a5-b75e-a1e341d4562a"
+style="--i: 10"
+loading="lazy"
+decoding="async"
+alt="" />
+
+<span class="item" style="--i: 11"></span>
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/5eb50f89-3e5a-480e-860c-8d40d3ba9ffe"
+style="--i: 12"
+loading="lazy"
+decoding="async"
+alt="" />
+
+<span class="item" style="--i: 5"></span>
+
+<span class="item" style="--i: 9"></span>
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/86c71a79-2efe-4567-8665-b1e5a1fd9735"
+style="--i: 8"
+loading="lazy"
+decoding="async"
+alt="" />
+
+<span class="item" style="--i: 7"></span>
+
+<img
+class="item"
+src="https://github.com/ecemgo/mini-samples-great-tricks/assets/13468728/97ef9643-5202-41aa-80f0-ceeabccdd099"
+style="--i: 6"
+loading="lazy"
+decoding="async"
+alt="" />
+
+</div>
 </section>
 
+
+<section class="card-container" id="card-container">
+
+<div class="slider">
+
+<div class="card tool-card resume-card" data-tilt>
+<div class="content">
+
+<img
+class="tool-image"
+src="image/resume-card-v2.svg"
+loading="lazy"
+decoding="async"
+alt="Professional resume editing workspace">
+
+<h1>Resume Builder</h1>
+
+<p>
+Build a professional resume in minutes with ready-made templates,
+smart section suggestions, and one-click formatting.
+</p>
+
+<a href="features/resume/resume.html" class="btn btn-grad">
+<span>Open Resume Builder</span>
+<ion-icon name="arrow-forward-outline"></ion-icon>
+</a>
+
 </div>
-</main>
 </div>
 
-<script src="../config.js"></script>
-<script src="admin.js"></script>
+
+<div class="card tool-card gemini-card" data-tilt>
+<div class="content">
+
+<img
+class="tool-image"
+src="image/gemini-card-v2.svg"
+loading="lazy"
+decoding="async"
+alt="Google Gemini logo">
+
+<h1>Gemini Chat Bot</h1>
+
+<p>
+Get instant help for coding, writing, and brainstorming with
+an AI chat assistant designed for student productivity.
+</p>
+
+<a href="features/gemini/gemini.html" class="btn btn-grad">
+<span>Open Gemini Chat</span>
+<ion-icon name="arrow-forward-outline"></ion-icon>
+</a>
+
+</div>
+</div>
+
+
+<div class="card tool-card mindgame-card" data-tilt>
+<div class="content">
+
+<img
+class="tool-image"
+src="image/mindgame-card.svg"
+loading="lazy"
+decoding="async"
+alt="Mind game puzzle pieces">
+
+<h1>Mind Game</h1>
+
+<p>
+Train your focus with interactive brain games and quick challenges
+that improve memory, logic, and speed.
+</p>
+
+<a href="mindgame.html" class="btn btn-grad">
+<span>Play Mind Game</span>
+<ion-icon name="arrow-forward-outline"></ion-icon>
+</a>
+
+</div>
+</div>
+
+
+</div>
+
+
+<ul class="control" id="custom-control">
+
+<li>
+<ion-icon name="caret-back-outline"></ion-icon>
+</li>
+
+<li>
+<ion-icon name="caret-forward-outline"></ion-icon>
+</li>
+
+</ul>
+
+ <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CMS</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">College Management System</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>CMS TEAM</h3>
+                <ul>
+                    <li><a href="cmsteam/sid.html">Siddhartha Gupta</a></li>
+                    <li><a href="cmsteam/mausam.html">Mausham kumar</a></li>
+                    <li><a href="cmsteam/yishu.html">Yishu Raj</a></li>
+                    <li><a href="cmsteam/yashwant.html">Yashwant Kumar</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="legal/privacy.html">Privacy Policy</a></li>
+                    <li><a href="legal/terms.html">Terms of Service</a></li>
+                    <li><a href="legal/cookies.html">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Status Page</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CMS. All Rights Reserved</p>
+            <p class="designer">Designed by <span> Siddhartha gupta</span></p>
+        </div>
+    </footer>
+
+</section>
+
+
+<!-- JS CONNECT -->
+<script src="features/shared/profile-sync.js" defer></script>
+<script src="Admin.js" defer></script>
+
+<!-- ICON LIBRARY -->
+<script type="module"
+src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
 </body>
 </html>

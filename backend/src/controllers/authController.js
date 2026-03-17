@@ -30,18 +30,14 @@ async function sendEmail(to, subject, html) {
 
 exports.signup = async (req, res) => {
   try {
-    const { name, email, phone, password, role } = req.body || {};
+    const { name, email, phone, password } = req.body || {};
 
     if (!name || !email || !phone || !password) {
       return res.status(400).json({ message: "name, email, phone, password are required" });
     }
 
-    if (role && !["admin", "faculty", "student"].includes(role)) {
-      return res.status(400).json({ message: "Invalid role" });
-    }
-
-    if (!String(email).toLowerCase().endsWith("@gmail.com")) {
-      return res.status(400).json({ message: "Signup requires a Gmail address" });
+    if (!String(email).toLowerCase().includes("@")) {
+      return res.status(400).json({ message: "Invalid email format" });
     }
 
     const lowerEmail = String(email).toLowerCase();
@@ -61,12 +57,29 @@ exports.signup = async (req, res) => {
       email: lowerEmail,
       phone,
       passwordHash,
-      role: role || "student",
       emailVerified: false,
       verificationToken,
       verificationTokenExpiresAt: expires,
       profile: {},
     });
+
+    const hasEmailConfig =
+      process.env.SMTP_HOST &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS &&
+      process.env.FRONTEND_URL;
+
+    if (!hasEmailConfig) {
+      // Dev fallback: skip email verification if SMTP/front URL not configured
+      user.emailVerified = true;
+      user.verificationToken = null;
+      user.verificationTokenExpiresAt = null;
+      await user.save();
+      const token = signToken(user._id.toString());
+      return res
+        .status(201)
+        .json({ message: "Account created (email verification skipped in dev).", token, user: user.toSafeJSON() });
+    }
 
     const verifyUrl = `${process.env.FRONTEND_URL || ""}/verify.html?token=${verificationToken}`;
     await sendEmail(

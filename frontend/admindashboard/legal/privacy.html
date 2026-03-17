@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Privacy Policy</title>
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000;
+font-family:sans-serif;
+color:#0ff;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#00ffff55,transparent);
+animation:spin 10s linear infinite;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+.box{
+position:relative;
+background:#111;
+padding:50px;
+border-radius:20px;
+border:1px solid #0ff;
+box-shadow:0 0 40px #0ff;
+max-width:700px;
+animation:fade 1.2s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:scale(.8);}
+to{opacity:1;transform:scale(1);}
+}
+
+h1{color:#0ff;margin-bottom:20px;}
+p{color:#aaa;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Privacy Policy</h1>
+<p>Your data is encrypted and securely stored.</p>
+<p>We never share personal information without consent.</p>
+<p>All authentication is protected by secure protocols.</p>
+</div>
+</body>
+</html>
