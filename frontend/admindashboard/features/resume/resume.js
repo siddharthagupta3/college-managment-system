@@ -1498,48 +1498,31 @@ async function downloadPdf() {
 		container.style.position = "fixed";
 		container.style.left = "-9999px";
 		container.style.top = "0";
-		container.style.width = "794px";
-		container.style.height = "1123px";
+		container.style.width = "800px";
 		container.style.padding = "0";
 		container.style.margin = "0";
 		container.style.background = "white";
 		container.style.zIndex = "-1";
-		container.style.overflow = "hidden";
+		container.style.overflow = "visible";
 
 		clone.id = "resume-preview-export";
-		clone.style.width = "794px";
-		clone.style.height = "auto";
-		clone.style.padding = "20px";
 		clone.style.margin = "0";
 		clone.style.background = "white";
 		clone.style.boxSizing = "border-box";
 		clone.style.borderRadius = "0";
 		clone.style.boxShadow = "none";
-		clone.style.overflow = "visible";
 		clone.style.display = "block";
+		clone.style.width = "100%";
+		clone.style.padding = "15px";
 
-		// 2. DISABLE all responsive CSS
-		// Disable all media queries by disable stylesheets
+		// 2. AGGRESSIVE CSS OVERRIDE - Ensure EVERYTHING fits
 		const styleTag = document.createElement("style");
 		styleTag.textContent = `
-			#resume-preview-export,
-			#resume-preview-export * {
-				width: auto !important;
-				max-width: none !important;
-				min-width: auto !important;
-				height: auto !important;
-				max-height: none !important;
-				min-height: auto !important;
-				padding: inherit !important;
-				margin: inherit !important;
-				border: inherit !important;
-				display: inherit !important;
-				grid-template-columns: inherit !important;
-				flex-wrap: inherit !important;
-				font-size: inherit !important;
-				line-height: inherit !important;
-			}
 			#resume-preview-export {
+				width: 100% !important;
+				padding: 15px !important;
+				margin: 0 !important;
+				overflow: visible !important;
 				page-break-after: avoid !important;
 				page-break-before: avoid !important;
 				page-break-inside: avoid !important;
@@ -1547,46 +1530,104 @@ async function downloadPdf() {
 				break-before: avoid !important;
 				break-inside: avoid !important;
 			}
+
+			#resume-preview-export * {
+				page-break-inside: avoid !important;
+				break-inside: avoid !important;
+			}
+
+			/* Aggressive padding/margin reduction */
+			#resume-preview-export h1, 
+			#resume-preview-export h2, 
+			#resume-preview-export h3, 
+			#resume-preview-export h4, 
+			#resume-preview-export h5, 
+			#resume-preview-export h6 {
+				margin-top: 8px !important;
+				margin-bottom: 4px !important;
+				padding: 0 !important;
+			}
+
+			#resume-preview-export p {
+				margin: 2px 0 !important;
+				padding: 0 !important;
+			}
+
+			#resume-preview-export div {
+				margin-top: 0 !important;
+				margin-bottom: 0 !important;
+			}
+
+			#resume-preview-export li {
+				margin: 2px 0 !important;
+				padding: 0 !important;
+			}
+
+			#resume-preview-export .section {
+				margin-bottom: 8px !important;
+				padding: 0 !important;
+			}
+
+			#resume-preview-export article {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			#resume-preview-export main {
+				display: block !important;
+				width: 100% !important;
+			}
+
+			/* Reduce line height slightly */
+			#resume-preview-export {
+				line-height: 1.3 !important;
+			}
+
+			#resume-preview-export * {
+				line-height: inherit !important;
+			}
 		`;
 		container.appendChild(styleTag);
 		container.appendChild(clone);
 		document.body.appendChild(container);
 
-		// 3. FORCE A4 SIZE exactly (794px width, 1123px height)
-		// Scale content to fit if needed
-		let scale = 1;
+		// Wait for rendering
+		await new Promise(resolve => setTimeout(resolve, 150));
+
+		// 3. AUTO-FIT: Calculate required scale to fit content on one page
 		const maxHeight = 1123;
-		const maxWidth = 794;
+		const currentHeight = clone.scrollHeight;
+		let scaleRequired = 1;
 
-		// Wait for content to render
-		await new Promise(resolve => setTimeout(resolve, 100));
-
-		// Auto-fit logic: reduce scale if content exceeds height
-		while (clone.scrollHeight > maxHeight && scale > 0.5) {
-			scale -= 0.05;
-			clone.style.transform = `scale(${scale})`;
-			clone.style.transformOrigin = "top left";
-			clone.style.width = `${maxWidth / scale}px`;
-			await new Promise(resolve => setTimeout(resolve, 50));
+		if (currentHeight > maxHeight) {
+			scaleRequired = maxHeight / currentHeight;
+			scaleRequired = Math.max(scaleRequired, 0.5); // Don't go below 0.5x
 		}
 
-		// 4. USE html2canvas + jsPDF (NOT html2pdf)
+		// Apply scale transform
+		clone.style.transform = `scale(${scaleRequired})`;
+		clone.style.transformOrigin = "top left";
+		clone.style.width = `${800 / scaleRequired}px`;
+
+		// Wait after scaling
+		await new Promise(resolve => setTimeout(resolve, 100));
+
+		// 4. RENDER to canvas with high quality
 		const canvas = await window.html2canvas(clone, {
 			scale: 2,
 			useCORS: true,
 			backgroundColor: "white",
 			logging: false,
-			windowWidth: 794,
-			windowHeight: 1123,
+			windowWidth: 800,
+			windowHeight: 1200,
 			ignoreElements: (element) => {
-				// Ignore elements that shouldn't be rendered
 				return element.tagName === "SCRIPT" || element.tagName === "STYLE";
 			}
 		});
 
 		const imgData = canvas.toDataURL("image/png");
 
-		// Create PDF with exact A4 dimensions
+		// 5. CREATE PDF with exact A4 dimensions
 		const { jsPDF } = window.jspdf;
 		const pdf = new jsPDF({
 			orientation: "portrait",
@@ -1594,32 +1635,42 @@ async function downloadPdf() {
 			format: "a4"
 		});
 
-		// Add image to PDF (210mm x 297mm - A4 size)
-		pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+		// Add image to PDF - scale to fit A4
+		const pdfWidth = 210;
+		const pdfHeight = 297;
+		
+		// Calculate aspect ratio to fit within A4
+		const imgAspect = canvas.width / canvas.height;
+		const pdfAspect = pdfWidth / pdfHeight;
+		
+		let finalWidth = pdfWidth;
+		let finalHeight = pdfHeight;
+		
+		if (imgAspect > pdfAspect) {
+			finalHeight = pdfWidth / imgAspect;
+		} else {
+			finalWidth = pdfHeight * imgAspect;
+		}
+		
+		const offsetX = (pdfWidth - finalWidth) / 2;
+		const offsetY = (pdfHeight - finalHeight) / 2;
+		
+		pdf.addImage(imgData, "PNG", offsetX, offsetY, finalWidth, finalHeight);
 		pdf.save(filename);
 
-		showStatus("✓ Downloaded as single-page A4 PDF");
+		showStatus(`✓ Downloaded as single-page A4 PDF (${scaleRequired.toFixed(2)}x scale)`);
 
 	} catch (err) {
 		console.error("PDF Download Error:", err);
 		showStatus(err.message || "Unable to download PDF. Check console for details.", true);
 	} finally {
-		// 5. CLEANUP - Remove export container
-		const exportContainer = document.querySelector("div[style*='left: -9999px']");
-		if (exportContainer && exportContainer.id !== "resume-preview-export") {
-			// Make sure we're removing the right one
-			const exports = Array.from(document.querySelectorAll("div[style*='left: -9999px']"));
-			exports.forEach(el => {
-				if (el.querySelector("#resume-preview-export")) {
-					el.parentElement.removeChild(el);
-				}
-			});
-		}
-		// Direct removal by finding the container
-		const allFixedDivs = document.querySelectorAll("div[style*='position: fixed']");
+		// 6. CLEANUP - Remove all export containers
+		const allFixedDivs = Array.from(document.querySelectorAll("div[style*='position: fixed']"));
 		allFixedDivs.forEach(div => {
-			if (div.querySelector("#resume-preview-export")) {
-				document.body.removeChild(div);
+			if (div.style.left === "-9999px" || div.querySelector("#resume-preview-export")) {
+				if (document.body.contains(div)) {
+					document.body.removeChild(div);
+				}
 			}
 		});
 	}
